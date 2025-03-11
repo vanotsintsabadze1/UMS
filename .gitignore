@@ -1,0 +1,119 @@
+# Rider specific files
+.idea/
+.idea_modules/
+.idea_name/
+
+# Rider project files
+.gradle/
+build/
+!gradle-wrapper.jar
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Compiled source
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+# Directories
+bin/
+obj/
+
+# Node modules
+node_modules/
+
+# Entity Framework Migrations
+!Migrations/
+
+# Visual Studio Specific
+.vs/
+.vscode/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Build Artifacts
+bin/
+obj/
+[Bb]uild/
+[Ll]ogs/
+*.cache
+*.ilk
+*.pdb
+*.ipch
+*.aps
+*.ncb
+*.opensdf
+*.sdf
+*.tlog
+*.log
+
+# Packages and Dependencies
+packages/
+node_modules/
+wwwroot/lib/
+bower_components/
+
+# NuGet Packages
+*.nupkg
+project.lock.json
+project.assets.json
+packages.lock.json
+.nuget/
+
+# Publish Files
+publish/
+out/
+*.publishsettings
+*.pfx
+*.snk
+
+# Debugging
+*.suo
+*.ntvs*
+*.njsproj
+*.sqlproj
+*.sln.docstates
+*.rsuser
+
+# Resharper
+_ReSharper.Caches/
+*.DotSettings.user
+
+# Rider
+.idea/
+
+# Docker
+**/[Dd]ockerfile*
+**/[Dd]ocker-compose*
+.dockerignore
+
+# Entity Framework Migrations
+!Migrations/
+
+# ASP.NET Identity
+appsettings*.json
+
+# Logs and Generated Files
+*.log
+*.tlog
+*.csv
+*.DS_Store
+
+# JetBrains Rider
+.idea/
+*.iml
+
+# Windows
+Thumbs.db
+ehthumbs.db
