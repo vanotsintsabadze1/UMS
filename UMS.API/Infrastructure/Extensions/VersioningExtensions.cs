@@ -15,10 +15,20 @@ public static class VersioningExtensions
             })
             .AddApiExplorer(options =>
             {
-                options.GroupNameFormat = "'v'V";
+                options.GroupNameFormat = "'v'VVV";
                 options.SubstituteApiVersionInUrl = true;
             });
 
         return services;
+    }
+
+    public static IApplicationBuilder UseVersioning(this WebApplication app)
+    {
+        app.NewApiVersionSet()
+            .HasApiVersion(new ApiVersion(1))
+            .ReportApiVersions()
+            .Build();
+
+        return app;
     }
 }
