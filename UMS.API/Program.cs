@@ -6,6 +6,7 @@ builder.Services.AddRouting(options => options.LowercaseUrls = true);
 builder.Services.AddControllers();
 builder.Services.ConfigureSwagger();
 builder.Services.ConfigureVersioning();
+builder.Services.ConfigureValidation();
 
 var app = builder.Build();
 
