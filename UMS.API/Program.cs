@@ -11,7 +11,10 @@ builder.Services.ConfigureValidation();
 var app = builder.Build();
 
 app.UseConfiguredSwagger();
+app.UseVersioning();
 app.UseHttpsRedirection();
 app.UseRouting();
+app.UseGlobalExceptionHandling();
+app.MapControllers();
 
 app.Run();
