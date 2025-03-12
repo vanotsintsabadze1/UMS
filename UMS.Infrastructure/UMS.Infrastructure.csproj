@@ -7,8 +7,8 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\UMS.Application\UMS.Application.csproj" />
       <ProjectReference Include="..\UMS.Persistence\UMS.Persistence.csproj" />
-      <ProjectReference Include="..\UMS.Shared\UMS.Shared.csproj" />
     </ItemGroup>
 
 </Project>

@@ -7,7 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\UMS.Shared\UMS.Shared.csproj" />
+      <ProjectReference Include="..\UMS.Domain\UMS.Domain.csproj" />
     </ItemGroup>
 
 </Project>
