@@ -4,7 +4,7 @@ using FluentValidation.AspNetCore;
 
 namespace UMS.API.Infrastructure.Extensions;
 
-public static class ValidationExtensions 
+public static class ValidationExtensions
 {
     public static IServiceCollection ConfigureValidation(this IServiceCollection services)
     {
