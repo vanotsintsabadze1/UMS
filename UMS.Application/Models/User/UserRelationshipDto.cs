@@ -2,7 +2,7 @@
 
 namespace UMS.Application.Models.User;
 
-public class UserRelationshipRequestModel
+public class UserRelationshipDto
 {
     public required int RelatedUserId { get; set; }
     public required UserRelationshipTypes RelationshipType { get; set; }
