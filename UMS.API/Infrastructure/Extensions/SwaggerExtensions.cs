@@ -1,4 +1,5 @@
-﻿using Microsoft.OpenApi.Models;
+﻿using System.Reflection;
+using Microsoft.OpenApi.Models;
 
 namespace UMS.API.Infrastructure.Extensions;
 
@@ -20,6 +21,11 @@ public static class SwaggerExtensions
                     Email = "tsintsabadzevano@gmail.com"
                 }
             });
+
+            var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+            var xmlFilePath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+            
+            options.IncludeXmlComments(xmlFilePath);
         });
 
         return services;
