@@ -11,7 +11,7 @@ public class PhoneNumberConfiguration : IEntityTypeConfiguration<PhoneNumber>
         builder.HasKey(u => new { u.UserId, u.Number });
 
         builder.HasOne(p => p.User)
-            .WithMany(u => u.PhoneNumber)
+            .WithMany(u => u.PhoneNumbers)
             .HasForeignKey(p => p.UserId)
             .OnDelete(DeleteBehavior.Cascade);
 
