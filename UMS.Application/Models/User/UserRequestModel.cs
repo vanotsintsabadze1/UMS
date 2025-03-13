@@ -1,6 +1,5 @@
 ﻿using UMS.Application.Models.PhoneNumber;
 using UMS.Domain.Enums;
-using UMS.Domain.ValueObjects;
 
 namespace UMS.Application.Models.User;
 
