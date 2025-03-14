@@ -1,6 +1,6 @@
 ﻿using Mapster;
 using MediatR;
-using UMS.Application.CQRS.Queries;
+using UMS.Application.CQRS.Queries.User;
 using UMS.Application.Exceptions;
 using UMS.Application.Interfaces.Repositories;
 using UMS.Application.Models.User;

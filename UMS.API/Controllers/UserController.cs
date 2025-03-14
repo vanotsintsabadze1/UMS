@@ -6,7 +6,7 @@ using UMS.API.Infrastructure.Utilities;
 using UMS.API.Models;
 using UMS.API.Models.Response;
 using UMS.Application.CQRS.Commands.User;
-using UMS.Application.CQRS.Queries;
+using UMS.Application.CQRS.Queries.User;
 using UMS.Application.Models.User;
 
 namespace UMS.API.Controllers;
