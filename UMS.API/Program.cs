@@ -1,4 +1,5 @@
 using UMS.API.Infrastructure.Extensions;
+using UMS.Application.Extensions;
 using UMS.Infrastructure.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,7 +10,8 @@ builder.Services.ConfigureSwagger();
 builder.Services.ConfigureVersioning();
 builder.Services.ConfigureValidation();
 
-builder.Services.AddInfrastructureServices();
+builder.Services.AddInfrastructureServices()
+    .AddApplicationServices();
 
 var app = builder.Build();
 

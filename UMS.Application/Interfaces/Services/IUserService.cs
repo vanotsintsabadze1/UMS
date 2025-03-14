@@ -4,5 +4,5 @@ namespace UMS.Application.Interfaces.Services;
 
 public interface IUserService
 {
-    Task<UserResponseModel> Create(UserRequestModel user, string imageUri, byte[] imageBytes, CancellationToken cancellationToken);
+    Task<UserResponseModel> Create(UserRequestModel user, CancellationToken cancellationToken);
 }

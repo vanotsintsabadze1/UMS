@@ -49,7 +49,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             ));
         
         builder.HasOne<City>(u => u.City)
-            .WithOne()
-            .HasForeignKey<User>(u => u.CityId);
+            .WithMany()
+            .HasForeignKey(u => u.CityId);
     }
 }
