@@ -50,6 +50,18 @@ public class UserService : IUserService
         return response.Adapt<UserResponseModel>();
     }
 
+    public async Task<UserResponseModel> ChangeProfileImage(int userId, string fileName, byte[] imageBytes, CancellationToken cancellationToken)
+    {
+        var user = await _userRepository.GetAsync(u => u.Id == userId, cancellationToken);
+
+        if (user is null)
+            // NotFoundException will be added in the future commit.
+            // I don't want to clog the first commit with creation of everything
+            throw new BadRequestException("User does not exist");
+        
+        return user.Adapt<UserResponseModel>();
+    }
+
     private bool IsEighteen(DateOnly birthday)
     {
         var currentDate = DateOnly.FromDateTime(DateTime.UtcNow);
