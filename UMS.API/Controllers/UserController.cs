@@ -79,4 +79,26 @@ public class UserController : ControllerBase
         var response = await _userService.Delete(id, cancellationToken);
         return new ApiResponse<UserResponseModel>(response);
     }
+
+    /// <summary>
+    /// Updates the existing user
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="user"></param>
+    /// <param name="cancellationToken"></param>
+    /// <response code="200">If the user was updated successfully</response>
+    /// <response code="400">If the data in the request was invalid</response>
+    /// <response code="401">If the user was not found</response>
+    /// <response code="500">If something went wrong on the server</response>
+    [HttpPut("{id}")]
+    [Produces(MediaTypeNames.Application.Json)]
+    [ProducesResponseType(typeof(ApiResponse<UserResponseModel>), 200)]
+    [ProducesResponseType(typeof(ApiResponse), 400)]
+    [ProducesResponseType(typeof(ApiResponse), 401)]
+    [ProducesResponseType(typeof(ApiResponse), 500)]
+    public async Task<ApiResponse<UserResponseModel>> Update([FromRoute] int id, [FromBody] UpdateUserRequestModel user, CancellationToken cancellationToken)
+    {
+        var response = await _userService.Update(id, user, cancellationToken);
+        return new ApiResponse<UserResponseModel>(response);
+    }
 }

@@ -7,5 +7,5 @@ public interface IUserService
     Task<UserResponseModel> Create(UserRequestModel user, CancellationToken cancellationToken);
     Task<UserResponseModel> ChangeProfileImage(int userId, string fileName, byte[] imageBytes, CancellationToken cancellationToken);
     Task<UserResponseModel> Delete(int userId, CancellationToken cancellationToken);
-    Task<UserResponseModel> Update(int userId, UserRequestModel user, CancellationToken cancellationToken);
+    Task<UserResponseModel> Update(int userId, UpdateUserRequestModel user, CancellationToken cancellationToken);
 }

@@ -123,20 +123,25 @@ public class UserService : IUserService
         return response;
     }
 
-    public async Task<UserResponseModel> Update(int userId, UserRequestModel user, CancellationToken cancellationToken)
+    public async Task<UserResponseModel> Update(int userId, UpdateUserRequestModel user, CancellationToken cancellationToken)
     {
         var userDb = await _userRepository.GetAsync(u => u.Id == userId, cancellationToken);
 
         if (userDb is null)
             throw new NotFoundException("Such user does not exist");
 
-        var userEntity = user.Adapt<User>();
-        
-        userEntity.Relationships = userDb.Relationships;
-        userEntity.Id = userId;
+        if (!IsEighteen(user.DateOfBirth))
+            throw new BadRequestException("Updated user age can't be below 18");
 
-        await _userRepository.UpdateAsync(userEntity, cancellationToken);
-        return userEntity.Adapt<UserResponseModel>();
+        var city = await _cityRepository.GetAsync(c => c.Id == user.CityId, cancellationToken);
+
+        if (city is null)
+            throw new BadRequestException("City with the given id does not exist");
+        
+        user.Adapt(userDb);
+
+        await _userRepository.UpdateAsync(userDb, cancellationToken);
+        return userDb.Adapt<UserResponseModel>();
     }
 
     private bool IsEighteen(DateOnly birthday)
