@@ -50,8 +50,8 @@ public class UserController : ControllerBase
     [HttpPost]
     public async Task<ApiResponse<UserResponseModel>> Create([FromBody] UserRequestModel user, CancellationToken cancellationToken)
     {
-        var command = new CreateUserCommand(user, cancellationToken);
-        var response = await _mediator.Send(command);
+        var command = new CreateUserCommand(user);
+        var response = await _mediator.Send(command, cancellationToken);
         return new ApiResponse<UserResponseModel>(response);
     }
 
@@ -95,7 +95,8 @@ public class UserController : ControllerBase
     [ProducesResponseType(typeof(ApiResponse), 500)]
     public async Task<ApiResponse<UserResponseModel>> Delete(int id, CancellationToken cancellationToken)
     {
-        var response = await _userService.Delete(id, cancellationToken);
+        var command = new DeleteUserCommand(id);
+        var response = await _mediator.Send(command, cancellationToken);
         return new ApiResponse<UserResponseModel>(response);
     }
 
