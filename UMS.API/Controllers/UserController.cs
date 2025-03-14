@@ -6,6 +6,7 @@ using UMS.API.Infrastructure.Utilities;
 using UMS.API.Models;
 using UMS.API.Models.Response;
 using UMS.Application.CQRS.Commands.User;
+using UMS.Application.CQRS.Queries.User;
 using UMS.Application.Models.User;
 
 namespace UMS.API.Controllers;
@@ -119,6 +120,28 @@ public class UserController : ControllerBase
     {
         var command = new UpdateUserCommand(id, user);
         var response = await _mediator.Send(command, cancellationToken);
+        return new ApiResponse<UserResponseModel>(response);
+    }
+
+    /// <summary>
+    /// Retrieves the user by their id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="cancellationToken"></param>
+    /// <response code="200">If the user was retrieved successfully</response>
+    /// <response code="400">If the data in the request was invalid</response>
+    /// <response code="401">If the user was not found</response>
+    /// <response code="500">If something went wrong on the server</response>
+    [HttpGet("{id}")]   
+    [Produces(MediaTypeNames.Application.Json)]
+    [ProducesResponseType(typeof(ApiResponse<UserResponseModel>), 200)]
+    [ProducesResponseType(typeof(ApiResponse), 400)]
+    [ProducesResponseType(typeof(ApiResponse), 401)]
+    [ProducesResponseType(typeof(ApiResponse), 500)]
+    public async Task<ApiResponse<UserResponseModel>> GetById(int id, CancellationToken cancellationToken)
+    {
+        var query = new GetUserByIdQuery(id);
+        var response = await _mediator.Send(query, cancellationToken);
         return new ApiResponse<UserResponseModel>(response);
     }
 }
