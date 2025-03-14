@@ -61,7 +61,7 @@ public class UserController : ControllerBase
     [HttpPatch("{userId}")]
     [Produces(MediaTypeNames.Application.Json)]
     [ProducesResponseType(typeof(ApiResponse<UserResponseModel>), 200)]
-    public async Task<ApiResponse<UserResponseModel>> UploadProfileImage([FromForm] int userId, IFormFile image, CancellationToken cancellationToken)
+    public async Task<ApiResponse<UserResponseModel>> UploadProfileImage(int userId, IFormFile image, CancellationToken cancellationToken)
     {
         var imageBytes = await FileUtility.ConvertToByteArray(image);
         var response = await _userService.ChangeProfileImage(userId, image.FileName, imageBytes, cancellationToken);
