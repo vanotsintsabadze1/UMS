@@ -31,9 +31,6 @@ obj/
 # Node modules
 node_modules/
 
-# Entity Framework Migrations
-!Migrations/
-
 # Visual Studio Specific
 .vs/
 .vscode/
@@ -97,12 +94,6 @@ _ReSharper.Caches/
 **/[Dd]ockerfile*
 **/[Dd]ocker-compose*
 .dockerignore
-
-# Entity Framework Migrations
-!Migrations/
-
-# ASP.NET Identity
-appsettings*.json
 
 # Logs and Generated Files
 *.log
