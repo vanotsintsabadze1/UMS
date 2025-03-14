@@ -23,6 +23,8 @@ public class UserController : ControllerBase
     /// Creates the user 
     /// </summary>
     /// <remarks>
+    /// <b>Gender types can be</b>: Male, Female    
+    /// \
     /// <b>Mobile phone types can be</b>: Mobile, Office, Home
     /// \
     /// \
