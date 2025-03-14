@@ -73,6 +73,21 @@ public class UserController : ControllerBase
         return new ApiResponse<UserResponseModel>(response);
     }
 
+    /// <summary>
+    /// Deletes the existing user
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="cancellationToken"></param>
+    /// <response code="200">If the user was deleted successfully</response>
+    /// <response code="400">If the data in the request was invalid</response>
+    /// <response code="401">If the user was not found</response>
+    /// <response code="500">If something went wrong on the server</response>
+    [HttpPatch("image")]
+    [Produces(MediaTypeNames.Application.Json)]
+    [ProducesResponseType(typeof(ApiResponse<UserResponseModel>), 200)]
+    [ProducesResponseType(typeof(ApiResponse), 400)]
+    [ProducesResponseType(typeof(ApiResponse), 401)]
+    [ProducesResponseType(typeof(ApiResponse), 500)]
     [HttpDelete("{id}")]
     public async Task<ApiResponse<UserResponseModel>> Delete(int id, CancellationToken cancellationToken)
     {
