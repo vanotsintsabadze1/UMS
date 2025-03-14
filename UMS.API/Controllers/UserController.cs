@@ -73,7 +73,9 @@ public class UserController : ControllerBase
     public async Task<ApiResponse<UserResponseModel>> UploadProfileImage([FromForm] ImageUploadRequestModel model, CancellationToken cancellationToken)
     {
         var imageBytes = await FileUtility.ConvertToByteArray(model.Image);
-        var response = await _userService.ChangeProfileImage(model.UserId, model.Image.FileName, imageBytes, cancellationToken);
+
+        var command = new ChangeProfileImageCommand(model.UserId, model.Image.FileName, imageBytes);
+        var response = await _mediator.Send(command, cancellationToken);
 
         return new ApiResponse<UserResponseModel>(response);
     }
