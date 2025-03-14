@@ -53,7 +53,7 @@ public class UserController : ControllerBase
     /// <summary>
     /// Uploads/Changes the profile image for the user
     /// </summary>
-    /// <param name="userId"></param>
+    /// <param name="model"></param>
     /// <param name="cancellationToken"></param>
     /// <response code="200">If the image was uploaded successfully</response>
     /// <response code="400">If the data in the request was invalid</response>
