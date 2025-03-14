@@ -11,11 +11,13 @@ namespace UMS.Application.Services;
 public class UserService : IUserService
 {
     private readonly IUserRepository _userRepository;
+    private readonly ICityRepository _cityRepository;
     private readonly IUnitOfWork _unitOfWork;
 
-    public UserService(IUserRepository userRepository, IUnitOfWork unitOfWork)
+    public UserService(IUserRepository userRepository, ICityRepository cityRepository, IUnitOfWork unitOfWork)
     {
         _userRepository = userRepository;
+        _cityRepository = cityRepository;
         _unitOfWork = unitOfWork;
     }
     
@@ -29,6 +31,11 @@ public class UserService : IUserService
         if (!IsEighteen(user.DateOfBirth))
             throw new BadRequestException("User has to be at least 18 years old");
 
+        var city = await _cityRepository.GetAsync(c => c.Id == user.CityId, cancellationToken);
+
+        if (city is null)
+            throw new BadRequestException("Provided city does not exist");
+        
         if (user.Relationships is not null)
         {
             var doRelatedUsersExist = await CheckRelatedUsersExist(user.Relationships, cancellationToken);
