@@ -72,4 +72,11 @@ public class UserController : ControllerBase
 
         return new ApiResponse<UserResponseModel>(response);
     }
+
+    [HttpDelete("{id}")]
+    public async Task<ApiResponse<UserResponseModel>> Delete(int id, CancellationToken cancellationToken)
+    {
+        var response = await _userService.Delete(id, cancellationToken);
+        return new ApiResponse<UserResponseModel>(response);
+    }
 }

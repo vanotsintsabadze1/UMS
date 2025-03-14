@@ -15,7 +15,7 @@ public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : 
         _dbContext = dbContext;
         _dbSet = dbContext.Set<TEntity>();
     }
-    
+
     public async Task<TEntity?> GetAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken)
     {
         return await _dbSet.Where(predicate)
@@ -42,7 +42,22 @@ public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : 
     {
         _dbSet.Remove(entity);
         await _dbContext.SaveChangesAsync(cancellationToken);
-        
+
         return entity;
+    }
+
+    public async Task RemoveRangeAsync(ICollection<TEntity> entities, CancellationToken cancellationToken)
+    {
+        _dbSet.RemoveRange(entities);
+        await _dbContext.SaveChangesAsync(cancellationToken);
+    }
+
+    public async Task<ICollection<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> predicate,
+        CancellationToken cancellationToken)
+    {
+        var entities = await _dbSet.Where(predicate)
+            .ToListAsync(cancellationToken);
+
+        return entities;
     }
 }

@@ -15,6 +15,7 @@ public class UserService : IUserService
     private readonly IUserRepository _userRepository;
     private readonly ICityRepository _cityRepository;
     private readonly IImageRepository _imageRepository;
+    private readonly IRelationshipRepository _relationshipRepository;
     private readonly ILogger<UserService> _logger;
     private readonly IUnitOfWork _unitOfWork;
 
@@ -22,12 +23,14 @@ public class UserService : IUserService
         IUserRepository userRepository, 
         ICityRepository cityRepository,
         IImageRepository imageRepository,
+        IRelationshipRepository relationshipRepository,
         IConfiguration configuration,
         ILogger<UserService> logger,
         IUnitOfWork unitOfWork)
     {
         _userRepository = userRepository;
         _cityRepository = cityRepository;
+        _relationshipRepository = relationshipRepository;
         _imageRepository = imageRepository;
         _unitOfWork = unitOfWork;
     }
@@ -84,6 +87,40 @@ public class UserService : IUserService
         }
         
         return user.Adapt<UserResponseModel>();
+    }
+
+    public async Task<UserResponseModel> Delete(int userId, CancellationToken cancellationToken)
+    {
+        var user = await _userRepository.GetAsync(u => u.Id == userId, cancellationToken);
+
+        if (user is null)
+            throw new NotFoundException("User with such id does not exist");
+
+        var indirectUserRelationships = await _relationshipRepository.GetAllAsync(r => r.RelatedUserId == userId, cancellationToken);
+
+        if (indirectUserRelationships.Count != 0)
+            await _relationshipRepository.RemoveRangeAsync(indirectUserRelationships, cancellationToken);
+
+        var response = user.Adapt<UserResponseModel>();
+        
+        if (user.Relationships is not null)
+        {
+            try
+            {
+                await _unitOfWork.BeginTransaction(cancellationToken);
+                await _relationshipRepository.RemoveRangeAsync(user.Relationships, cancellationToken);
+                await _userRepository.DeleteAsync(user, cancellationToken);
+                await _unitOfWork.CommitTransaction(cancellationToken);
+            }
+            catch (Exception)
+            {
+                _logger.LogCritical("Critical error occured while trying to delete a user - {0}", user);
+                await _unitOfWork.RollbackTransaction(cancellationToken);
+                throw;
+            }
+        }
+
+        return response;
     }
 
     private bool IsEighteen(DateOnly birthday)
