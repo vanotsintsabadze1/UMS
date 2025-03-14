@@ -123,6 +123,27 @@ public class UserService : IUserService
         return response;
     }
 
+    public async Task<UserResponseModel> Update(int userId, UpdateUserRequestModel user, CancellationToken cancellationToken)
+    {
+        var userDb = await _userRepository.GetAsync(u => u.Id == userId, cancellationToken);
+
+        if (userDb is null)
+            throw new NotFoundException("Such user does not exist");
+
+        if (!IsEighteen(user.DateOfBirth))
+            throw new BadRequestException("Updated user age can't be below 18");
+
+        var city = await _cityRepository.GetAsync(c => c.Id == user.CityId, cancellationToken);
+
+        if (city is null)
+            throw new BadRequestException("City with the given id does not exist");
+        
+        user.Adapt(userDb);
+
+        await _userRepository.UpdateAsync(userDb, cancellationToken);
+        return userDb.Adapt<UserResponseModel>();
+    }
+
     private bool IsEighteen(DateOnly birthday)
     {
         var currentDate = DateOnly.FromDateTime(DateTime.UtcNow);
