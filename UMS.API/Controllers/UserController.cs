@@ -2,6 +2,7 @@
 using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
 using UMS.API.Infrastructure.Utilities;
+using UMS.API.Models;
 using UMS.API.Models.Response;
 using UMS.Application.Interfaces.Services;
 using UMS.Application.Models.User;
@@ -50,7 +51,7 @@ public class UserController : ControllerBase
     }
 
     /// <summary>
-    /// Uploads the profile image for the user
+    /// Uploads/Changes the profile image for the user
     /// </summary>
     /// <param name="userId"></param>
     /// <param name="cancellationToken"></param>
@@ -58,13 +59,16 @@ public class UserController : ControllerBase
     /// <response code="400">If the data in the request was invalid</response>
     /// <response code="401">If the user was not found</response>
     /// <response code="500">If something went wrong on the server</response>
-    [HttpPatch("{userId}")]
+    [HttpPatch("image")]
     [Produces(MediaTypeNames.Application.Json)]
     [ProducesResponseType(typeof(ApiResponse<UserResponseModel>), 200)]
-    public async Task<ApiResponse<UserResponseModel>> UploadProfileImage(int userId, IFormFile image, CancellationToken cancellationToken)
+    [ProducesResponseType(typeof(ApiResponse), 400)]
+    [ProducesResponseType(typeof(ApiResponse), 401)]
+    [ProducesResponseType(typeof(ApiResponse), 500)]
+    public async Task<ApiResponse<UserResponseModel>> UploadProfileImage([FromForm] ImageUploadRequestModel model, CancellationToken cancellationToken)
     {
-        var imageBytes = await FileUtility.ConvertToByteArray(image);
-        var response = await _userService.ChangeProfileImage(userId, image.FileName, imageBytes, cancellationToken);
+        var imageBytes = await FileUtility.ConvertToByteArray(model.Image);
+        var response = await _userService.ChangeProfileImage(model.UserId, model.Image.FileName, imageBytes, cancellationToken);
 
         return new ApiResponse<UserResponseModel>(response);
     }
