@@ -102,22 +102,22 @@ public class UserService : IUserService
             await _relationshipRepository.RemoveRangeAsync(indirectUserRelationships, cancellationToken);
 
         var response = user.Adapt<UserResponseModel>();
-        
-        if (user.Relationships is not null)
+
+        try
         {
-            try
-            {
-                await _unitOfWork.BeginTransaction(cancellationToken);
+            await _unitOfWork.BeginTransaction(cancellationToken);
+       
+            if (user.Relationships is not null)
                 await _relationshipRepository.RemoveRangeAsync(user.Relationships, cancellationToken);
-                await _userRepository.DeleteAsync(user, cancellationToken);
-                await _unitOfWork.CommitTransaction(cancellationToken);
-            }
-            catch (Exception)
-            {
-                _logger.LogCritical("Critical error occured while trying to delete a user - {0}", user);
-                await _unitOfWork.RollbackTransaction(cancellationToken);
-                throw;
-            }
+            
+            await _userRepository.DeleteAsync(user, cancellationToken);
+            await _unitOfWork.CommitTransaction(cancellationToken);
+        }
+        catch (Exception)
+        {
+            _logger.LogCritical("Critical error occured while trying to delete a user - {0}", user);
+            await _unitOfWork.RollbackTransaction(cancellationToken);
+            throw;
         }
 
         return response;
