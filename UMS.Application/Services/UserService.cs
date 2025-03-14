@@ -57,7 +57,7 @@ public class UserService : IUserService
         if (user is null)
             // NotFoundException will be added in the future commit.
             // I don't want to clog the first commit with creation of everything
-            throw new BadRequestException("User does not exist");
+            throw new NotFoundException("User does not exist");
         
         return user.Adapt<UserResponseModel>();
     }

@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using Microsoft.AspNetCore.Http.HttpResults;
 using UMS.API.Models.Response;
 using UMS.Application.Exceptions;
 
@@ -10,7 +11,8 @@ public static class ExceptionHandler
         new()
         {
             { typeof(ConflictException), (exception) => HandleConflictException((ConflictException)exception)},
-            { typeof(BadRequestException), (exception) => HandleBadRequestException((BadRequestException)exception)}
+            { typeof(BadRequestException), (exception) => HandleBadRequestException((BadRequestException)exception)},
+            { typeof(NotFoundException), (exception) => HandleNotFoundException((NotFoundException)exception)}
         };
 
     public static ExceptionHandlerResponse Handle(Exception ex)
@@ -38,6 +40,13 @@ public static class ExceptionHandler
     {
         return new ExceptionHandlerResponse(
             (int)HttpStatusCode.BadRequest,
+            new ApiResponse(exception.Message));
+    }
+
+    private static ExceptionHandlerResponse HandleNotFoundException(NotFoundException exception)
+    {
+        return new ExceptionHandlerResponse(
+            (int)HttpStatusCode.NotFound,
             new ApiResponse(exception.Message));
     }
 }
