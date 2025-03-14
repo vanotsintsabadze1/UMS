@@ -1,13 +1,12 @@
 ﻿using FluentValidation;
 using UMS.API.Infrastructure.Extensions;
 using UMS.Application.Models.User;
-using UMS.Domain.Enums;
 
 namespace UMS.API.Infrastructure.Validators;
 
-public class UserRequestModelValidator : AbstractValidator<UserRequestModel>
+public class UpdateUserRequestModelValidator : AbstractValidator<UpdateUserRequestModel>
 {
-    public UserRequestModelValidator()
+    public UpdateUserRequestModelValidator()
     {
         RuleFor(u => u.Firstname)
             .MinimumLength(2)

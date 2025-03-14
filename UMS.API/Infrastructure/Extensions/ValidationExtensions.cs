@@ -28,10 +28,25 @@ public static class ValidationExtensions
                 };
             });
 
-        
+
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
         services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
 
         return services;
+    }
+
+    public static IRuleBuilderOptions<T, string> MustBelongToSingleAlphabet<T>(this IRuleBuilder<T, string> ruleBuilder)
+        where T : class
+    {
+        return ruleBuilder
+            .Matches(@"^[a-zA-Z]+$|^[ა-ჰ]+$")
+            .WithMessage("Name must contain only Latin or only Georgian letters.");
+    }
+
+    public static IRuleBuilderOptions<T, string> MustBeParsedIntoNumber<T>(this IRuleBuilder<T, string> ruleBuilder)
+    {
+        return ruleBuilder
+            .Must(val => long.TryParse(val, out _))
+            .WithMessage((_, val) => $"{val} is not a valid number");
     }
 }
