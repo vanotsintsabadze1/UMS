@@ -19,7 +19,7 @@ public class UserController : ControllerBase
     }
     
     [HttpPost]
-    public async Task<ApiResponse<UserResponseModel>> Get([FromBody] UserRequestModel user, CancellationToken cancellationToken)
+    public async Task<ApiResponse<UserResponseModel>> Create([FromBody] UserRequestModel user, CancellationToken cancellationToken)
     {
         var model = await _userService.Create(user, cancellationToken);
         return new ApiResponse<UserResponseModel>(model);
