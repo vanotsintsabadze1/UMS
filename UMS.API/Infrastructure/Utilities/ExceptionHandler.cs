@@ -1,12 +1,17 @@
 ﻿using System.Net;
 using UMS.API.Models.Response;
+using UMS.Application.Exceptions;
 
 namespace UMS.API.Infrastructure.Utilities;
 
 public static class ExceptionHandler
 {
     private static readonly Dictionary<Type, Func<Exception, ExceptionHandlerResponse>> _handlers =
-        new();
+        new()
+        {
+            { typeof(ConflictException), (exception) => HandleConflictException((ConflictException)exception)},
+            { typeof(BadRequestException), (exception) => HandleBadRequestException((BadRequestException)exception)}
+        };
 
     public static ExceptionHandlerResponse Handle(Exception ex)
     {
@@ -20,5 +25,19 @@ public static class ExceptionHandler
         return new ExceptionHandlerResponse(
             (int)HttpStatusCode.InternalServerError,
             new ApiResponse("Unexpected error happened on the server while trying to serve the response"));
+    }
+
+    private static ExceptionHandlerResponse HandleConflictException(ConflictException exception)
+    {
+        return new ExceptionHandlerResponse(
+            (int)HttpStatusCode.Conflict,
+            new ApiResponse(exception.Message));
+    }
+
+    private static ExceptionHandlerResponse HandleBadRequestException(BadRequestException exception)
+    {
+        return new ExceptionHandlerResponse(
+            (int)HttpStatusCode.BadRequest,
+            new ApiResponse(exception.Message));
     }
 }
