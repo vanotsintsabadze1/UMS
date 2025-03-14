@@ -10,6 +10,8 @@ builder.Services.ConfigureSwagger();
 builder.Services.ConfigureVersioning();
 builder.Services.ConfigureValidation();
 
+builder.Logging.ConfigureLogging();
+
 builder.Services.AddInfrastructureServices()
     .AddApplicationServices();
 
