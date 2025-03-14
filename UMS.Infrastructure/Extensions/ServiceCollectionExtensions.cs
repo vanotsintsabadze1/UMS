@@ -18,6 +18,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<ICityRepository, CityRepository>();
         services.AddScoped<IImageRepository, ImageRepository>();
+        services.AddScoped<IRelationshipRepository, RelationshipRepository>();
         
         return services;
     }

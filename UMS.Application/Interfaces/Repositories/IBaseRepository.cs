@@ -8,4 +8,6 @@ public interface IBaseRepository<TEntity> where TEntity : class
     Task<TEntity> AddAsync(TEntity entity, CancellationToken cancellationToken);
     Task<TEntity> UpdateAsync(TEntity entity, CancellationToken cancellationToken);
     Task<TEntity> DeleteAsync(TEntity entity, CancellationToken cancellationToken);
+    Task RemoveRangeAsync(ICollection<TEntity> entities, CancellationToken cancellationToken);
+    Task<ICollection<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken);
 }
