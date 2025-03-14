@@ -123,6 +123,22 @@ public class UserService : IUserService
         return response;
     }
 
+    public async Task<UserResponseModel> Update(int userId, UserRequestModel user, CancellationToken cancellationToken)
+    {
+        var userDb = await _userRepository.GetAsync(u => u.Id == userId, cancellationToken);
+
+        if (userDb is null)
+            throw new NotFoundException("Such user does not exist");
+
+        var userEntity = user.Adapt<User>();
+        
+        userEntity.Relationships = userDb.Relationships;
+        userEntity.Id = userId;
+
+        await _userRepository.UpdateAsync(userEntity, cancellationToken);
+        return userEntity.Adapt<UserResponseModel>();
+    }
+
     private bool IsEighteen(DateOnly birthday)
     {
         var currentDate = DateOnly.FromDateTime(DateTime.UtcNow);
