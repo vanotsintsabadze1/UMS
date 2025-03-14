@@ -6,7 +6,6 @@ using UMS.API.Infrastructure.Utilities;
 using UMS.API.Models;
 using UMS.API.Models.Response;
 using UMS.Application.CQRS.Commands.User;
-using UMS.Application.Interfaces.Services;
 using UMS.Application.Models.User;
 
 namespace UMS.API.Controllers;
@@ -16,12 +15,10 @@ namespace UMS.API.Controllers;
 [Route("/api/v{version:apiVersion}/[controller]")]
 public class UserController : ControllerBase
 {
-    private readonly IUserService _userService;
     private readonly IMediator _mediator;
 
-    public UserController(IUserService userService, IMediator mediator)
+    public UserController(IMediator mediator)
     {
-        _userService = userService;
         _mediator = mediator;
     }
     
@@ -120,7 +117,8 @@ public class UserController : ControllerBase
     [ProducesResponseType(typeof(ApiResponse), 500)]
     public async Task<ApiResponse<UserResponseModel>> Update([FromRoute] int id, [FromBody] UpdateUserRequestModel user, CancellationToken cancellationToken)
     {
-        var response = await _userService.Update(id, user, cancellationToken);
+        var command = new UpdateUserCommand(id, user);
+        var response = await _mediator.Send(command, cancellationToken);
         return new ApiResponse<UserResponseModel>(response);
     }
 }
