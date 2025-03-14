@@ -35,35 +35,6 @@ public class UserService : IUserService
         _unitOfWork = unitOfWork;
     }
     
-    public async Task<UserResponseModel> Create(UserRequestModel user, CancellationToken cancellationToken)
-    {
-        var conflictingUser = await _userRepository.GetAsync(us => us.SocialNumber == user.SocialNumber, cancellationToken);
-        
-        if (conflictingUser is not null)
-            throw new ConflictException("User with such social number exists already");
-
-        if (!IsEighteen(user.DateOfBirth))
-            throw new BadRequestException("User has to be at least 18 years old");
-
-        var city = await _cityRepository.GetAsync(c => c.Id == user.CityId, cancellationToken);
-
-        if (city is null)
-            throw new BadRequestException("Provided city does not exist");
-        
-        if (user.Relationships is not null)
-        {
-            var doRelatedUsersExist = await CheckRelatedUsersExist(user.Relationships, cancellationToken);
-            
-            if (!doRelatedUsersExist)
-                throw new BadRequestException("One or more users in the provided relationships do not exist");
-        }
-
-        var entity = user.Adapt<User>();
-        var response = await _userRepository.AddAsync(entity, cancellationToken);
-
-        return response.Adapt<UserResponseModel>();
-    }
-
     public async Task<UserResponseModel> ChangeProfileImage(int userId, string fileName, byte[] imageBytes, CancellationToken cancellationToken)
     {
         var user = await _userRepository.GetAsync(u => u.Id == userId, cancellationToken);

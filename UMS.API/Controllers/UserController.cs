@@ -1,9 +1,11 @@
 ﻿using System.Net.Mime;
 using Asp.Versioning;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using UMS.API.Infrastructure.Utilities;
 using UMS.API.Models;
 using UMS.API.Models.Response;
+using UMS.Application.CQRS.Commands.User;
 using UMS.Application.Interfaces.Services;
 using UMS.Application.Models.User;
 
@@ -15,10 +17,12 @@ namespace UMS.API.Controllers;
 public class UserController : ControllerBase
 {
     private readonly IUserService _userService;
+    private readonly IMediator _mediator;
 
-    public UserController(IUserService userService)
+    public UserController(IUserService userService, IMediator mediator)
     {
         _userService = userService;
+        _mediator = mediator;
     }
     
     /// <summary>
@@ -46,8 +50,9 @@ public class UserController : ControllerBase
     [HttpPost]
     public async Task<ApiResponse<UserResponseModel>> Create([FromBody] UserRequestModel user, CancellationToken cancellationToken)
     {
-        var model = await _userService.Create(user, cancellationToken);
-        return new ApiResponse<UserResponseModel>(model);
+        var command = new CreateUserCommand(user, cancellationToken);
+        var response = await _mediator.Send(command);
+        return new ApiResponse<UserResponseModel>(response);
     }
 
     /// <summary>
@@ -82,13 +87,12 @@ public class UserController : ControllerBase
     /// <response code="400">If the data in the request was invalid</response>
     /// <response code="401">If the user was not found</response>
     /// <response code="500">If something went wrong on the server</response>
-    [HttpPatch("image")]
+    [HttpDelete("{id}")]
     [Produces(MediaTypeNames.Application.Json)]
     [ProducesResponseType(typeof(ApiResponse<UserResponseModel>), 200)]
     [ProducesResponseType(typeof(ApiResponse), 400)]
     [ProducesResponseType(typeof(ApiResponse), 401)]
     [ProducesResponseType(typeof(ApiResponse), 500)]
-    [HttpDelete("{id}")]
     public async Task<ApiResponse<UserResponseModel>> Delete(int id, CancellationToken cancellationToken)
     {
         var response = await _userService.Delete(id, cancellationToken);
