@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Serilog;
 using UMS.API.Infrastructure.Utilities;
 
 namespace UMS.API.Infrastructure.Middlewares;
@@ -8,12 +9,10 @@ namespace UMS.API.Infrastructure.Middlewares;
 public class GlobalExceptionHandlingMiddleware
 {
     private readonly RequestDelegate _next;
-    private readonly ILogger<GlobalExceptionHandlingMiddleware> _logger;
 
-    public GlobalExceptionHandlingMiddleware(RequestDelegate requestDelegate, ILogger<GlobalExceptionHandlingMiddleware> logger)
+    public GlobalExceptionHandlingMiddleware(RequestDelegate requestDelegate)
     {
         _next = requestDelegate;
-        _logger = logger;
     }
 
     public async Task Invoke(HttpContext httpContext)
@@ -42,14 +41,14 @@ public class GlobalExceptionHandlingMiddleware
         
         if (statusCode == (int)HttpStatusCode.InternalServerError)
         {
-            _logger.LogCritical(
+            Log.Fatal(
                 "Critical error occured - {0} \n - {1}", 
                 exception.StackTrace, 
                 exception.InnerException);
         }
         else
         {
-            _logger.LogError(
+            Log.Error(
                 "Error occured - {0} \n - {1}",
                 exception.StackTrace,
                 exception.InnerException);
