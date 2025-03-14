@@ -1,4 +1,6 @@
 ﻿using Mapster;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using UMS.Application.Exceptions;
 using UMS.Application.Interfaces.Repositories;
 using UMS.Application.Interfaces.Services;
@@ -12,12 +14,21 @@ public class UserService : IUserService
 {
     private readonly IUserRepository _userRepository;
     private readonly ICityRepository _cityRepository;
+    private readonly IImageRepository _imageRepository;
+    private readonly ILogger<UserService> _logger;
     private readonly IUnitOfWork _unitOfWork;
 
-    public UserService(IUserRepository userRepository, ICityRepository cityRepository, IUnitOfWork unitOfWork)
+    public UserService(
+        IUserRepository userRepository, 
+        ICityRepository cityRepository,
+        IImageRepository imageRepository,
+        IConfiguration configuration,
+        ILogger<UserService> logger,
+        IUnitOfWork unitOfWork)
     {
         _userRepository = userRepository;
         _cityRepository = cityRepository;
+        _imageRepository = imageRepository;
         _unitOfWork = unitOfWork;
     }
     
@@ -48,6 +59,31 @@ public class UserService : IUserService
         var response = await _userRepository.AddAsync(entity, cancellationToken);
 
         return response.Adapt<UserResponseModel>();
+    }
+
+    public async Task<UserResponseModel> ChangeProfileImage(int userId, string fileName, byte[] imageBytes, CancellationToken cancellationToken)
+    {
+        var user = await _userRepository.GetAsync(u => u.Id == userId, cancellationToken);
+
+        if (user is null)
+            throw new NotFoundException("User does not exist");
+
+        try
+        {
+            await _unitOfWork.BeginTransaction(cancellationToken);
+            _imageRepository.SaveFile(fileName, imageBytes);
+            user.ImageUri = fileName;
+            await _userRepository.UpdateAsync(user, cancellationToken);
+            await _unitOfWork.CommitTransaction(cancellationToken);
+        }
+        catch (Exception)
+        {
+            _logger.LogCritical("Could not save the file - {0}.", fileName);
+            await _unitOfWork.RollbackTransaction(cancellationToken);
+            throw;
+        }
+        
+        return user.Adapt<UserResponseModel>();
     }
 
     private bool IsEighteen(DateOnly birthday)
