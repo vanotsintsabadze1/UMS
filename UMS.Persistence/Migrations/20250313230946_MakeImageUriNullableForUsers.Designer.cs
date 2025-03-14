@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UMS.Persistence.Context;
 
@@ -11,9 +12,11 @@ using UMS.Persistence.Context;
 namespace UMS.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250313230946_MakeImageUriNullableForUsers")]
+    partial class MakeImageUriNullableForUsers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -77,7 +80,8 @@ namespace UMS.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CityId");
+                    b.HasIndex("CityId")
+                        .IsUnique();
 
                     b.ToTable("Users", t =>
                         {
@@ -131,8 +135,8 @@ namespace UMS.Persistence.Migrations
             modelBuilder.Entity("UMS.Domain.Entities.User", b =>
                 {
                     b.HasOne("UMS.Domain.Entities.City", "City")
-                        .WithMany()
-                        .HasForeignKey("CityId")
+                        .WithOne()
+                        .HasForeignKey("UMS.Domain.Entities.User", "CityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
