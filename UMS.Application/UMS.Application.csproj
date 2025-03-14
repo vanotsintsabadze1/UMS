@@ -12,10 +12,17 @@
 
     <ItemGroup>
       <PackageReference Include="Mapster" Version="7.4.0" />
+      <PackageReference Include="MediatR" Version="12.4.1" />
       <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
       <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
       <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="CQRS\Commands\User\" />
+      <Folder Include="CQRS\Handlers\" />
+      <Folder Include="CQRS\Queries\" />
     </ItemGroup>
 
 </Project>
