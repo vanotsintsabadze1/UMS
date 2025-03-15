@@ -12,8 +12,9 @@ public class User
     public required string SocialNumber { get; set; }
     public required DateOnly DateOfBirth { get; set; }
     public required int CityId { get; set; }
-    public required City City { get; set; }
+    public City City { get; set; }
     public string? ImageUri { get; set; }
     public required ICollection<PhoneNumber> PhoneNumbers { get; set; }
-    public ICollection<UserRelationship>? Relationships { get; set; }
+    public ICollection<UserRelationship>? RelatedUsers { get; set; }
+    public ICollection<UserRelationship>? RelatedByUsers { get; set; }
 }
