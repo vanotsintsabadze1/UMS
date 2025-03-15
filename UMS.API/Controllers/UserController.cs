@@ -235,4 +235,31 @@ public class UserController : ControllerBase
         var response = await _mediator.Send(command, cancellationToken);
         return new ApiResponse<UserRelationshipDto>(response);
     }
+    
+        
+    /// <summary>
+    /// Creates a relationship between two users
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <param name="relatedUserId"></param>
+    /// <param name=""></param>
+    /// <param name="cancellationToken"></param>
+    /// <response code="200">If the user relationship was deleted successfully</response>
+    /// <response code="400">If the data in the request was invalid</response>
+    /// <response code="404">If single or both users were not found</response>
+    /// <response code="409">If the relationship already exists</response>
+    /// <response code="500">If something went wrong on the server</response>
+    [HttpPatch("relationship")]
+    [Produces(MediaTypeNames.Application.Json)]
+    [ProducesResponseType(typeof(ApiResponse<UserResponseModel>), 200)]
+    [ProducesResponseType(typeof(ApiResponse), 400)]
+    [ProducesResponseType(typeof(ApiResponse), 404)]
+    [ProducesResponseType(typeof(ApiResponse), 409)]
+    [ProducesResponseType(typeof(ApiResponse), 500)]
+    public async Task<ApiResponse<UserRelationshipDto>> CreateRelationship(int userId, int relatedUserId, UserRelationshipTypes userRelationshipType, CancellationToken cancellationToken)
+    {
+        var command = new CreateUserRelationshipCommand(userId, relatedUserId, userRelationshipType);
+        var response = await _mediator.Send(command, cancellationToken);
+        return new ApiResponse<UserRelationshipDto>(response);
+    }
 }
