@@ -212,4 +212,27 @@ public class UserController : ControllerBase
         var response = await _mediator.Send(query, cancellationToken);
         return new ApiResponse<ICollection<UserRelationshipDto>>(response);
     }
+    
+    /// <summary>
+    /// Deletes a user relationship based on the user id and the related user id
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <param name="relatedUserId"></param>
+    /// <param name="cancellationToken"></param>
+    /// <response code="200">If the user relationship was deleted successfully</response>
+    /// <response code="400">If the data in the request was invalid</response>
+    /// <response code="404">If the relationship was not found</response>
+    /// <response code="500">If something went wrong on the server</response>
+    [HttpDelete("relationship")]
+    [Produces(MediaTypeNames.Application.Json)]
+    [ProducesResponseType(typeof(ApiResponse<UserResponseModel>), 200)]
+    [ProducesResponseType(typeof(ApiResponse), 400)]
+    [ProducesResponseType(typeof(ApiResponse), 404)]
+    [ProducesResponseType(typeof(ApiResponse), 500)]
+    public async Task<ApiResponse<UserRelationshipDto>> DeleteRelationships(int userId, int relatedUserId, CancellationToken cancellationToken)
+    {
+        var command = new DeleteUserRelationshipCommand(userId, relatedUserId);
+        var response = await _mediator.Send(command, cancellationToken);
+        return new ApiResponse<UserRelationshipDto>(response);
+    }
 }
