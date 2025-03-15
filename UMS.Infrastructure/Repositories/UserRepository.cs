@@ -21,9 +21,13 @@ public class UserRepository : BaseRepository<User>, IUserRepository
         var offset = (page - 1) * pageSize;
 
         var users = await _dbSet.Where(u =>
-                EF.Functions.Like(u.Firstname, pattern)
+                EF.Functions.Like(u.Firstname + " " + u.Lastname, pattern) // Full name search
+                || EF.Functions.Like(u.Firstname, pattern)
                 || EF.Functions.Like(u.Lastname, pattern)
                 || EF.Functions.Like(u.SocialNumber, pattern))
+            .Include(u => u.City)
+            .Include(u => u.PhoneNumbers)
+            .Include(u => u.Relationships)
             .Skip(offset)
             .Take(pageSize)
             .ToListAsync(cancellationToken);
