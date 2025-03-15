@@ -40,7 +40,12 @@ public class GetUserRelationshipsByTypeQueryHandler : IRequestHandler<GetUserRel
                 cancellationToken);
         }
         
+        var mappedRelationships = relationships.Select(r => new UserRelationshipDto
+        {
+            RelatedUserId = r.UserId == request.UserId ? r.RelatedUserId : r.UserId,
+            RelationshipType = r.RelationshipType
+        }).ToList();
 
-        return relationships.Adapt<ICollection<UserRelationshipDto>>();
+        return mappedRelationships.Adapt<ICollection<UserRelationshipDto>>();
     }
 }
