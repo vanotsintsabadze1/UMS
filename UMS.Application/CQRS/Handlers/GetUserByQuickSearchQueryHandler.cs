@@ -1,7 +1,6 @@
 ﻿using Mapster;
 using MediatR;
 using UMS.Application.CQRS.Queries.User;
-using UMS.Application.Exceptions;
 using UMS.Application.Interfaces.Repositories;
 using UMS.Application.Models.User;
 
@@ -18,8 +17,8 @@ public class GetUserByQuickSearchQueryHandler : IRequestHandler<GetUserByQuickSe
     
     public async Task<ICollection<UserResponseModel>> Handle(GetUserByQuickSearchQuery request, CancellationToken cancellationToken)
     {
-        if (!string.IsNullOrWhiteSpace(request.Query))
-            throw new BadRequestException("Query can not be empty");
+        if (string.IsNullOrWhiteSpace(request.Query))
+            return new List<UserResponseModel>();
 
         var users = await _userRepository.GetUserByQueryLike(
             request.Query,
