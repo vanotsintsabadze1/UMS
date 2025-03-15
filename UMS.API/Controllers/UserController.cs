@@ -43,6 +43,28 @@ public class UserController : ControllerBase
         var response = await _mediator.Send(query, cancellationToken);
         return new ApiResponse<PaginatedResponseModel<ICollection<UserResponseModel>>>(response);
     }
+
+    /// <summary>
+    /// Gets the users by detailed search if query params exist, otherwise gets all users paginated
+    /// </summary>
+    /// <remarks>
+    /// If you call this endpoint without any query parameters, then all the users will be retrieved in a paginated manner
+    /// </remarks>
+    /// <param name="user"></param>
+    /// <param name="page"></param>
+    /// <param name="pageSize"></param>
+    /// <param name="cancellationToken"></param>
+    /// <response code="200">If the request was successful</response>
+    /// <response code="400">If the data in the request was invalid</response>
+    /// <response code="500">If some unexpected error happened on the server</response>
+    [HttpGet]
+    [Route("/api/v{version:apiVersion}/users")]
+    public async Task<ApiResponse<PaginatedResponseModel<ICollection<UserResponseModel>>>> GetUsersPaginated([FromQuery] UserDetailedSearchRequestModel user, int? page, int? pageSize, CancellationToken cancellationToken)
+    {
+        var query = new GetUsersQuery(user, page, pageSize);
+        var response = await _mediator.Send(query, cancellationToken);
+        return new ApiResponse<PaginatedResponseModel<ICollection<UserResponseModel>>>(response);
+    }
     
     /// <summary>
     /// Creates the user 
