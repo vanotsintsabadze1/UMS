@@ -26,6 +26,9 @@ public class UpdateUserRequestModelValidator : AbstractValidator<UpdateUserReque
             .NotEmpty()
             .WithMessage("Phone number can't be empty")
             .Must(u => long.TryParse(u.Number, out _))
-            .WithMessage("Phone number has to be a valid number");
+            .WithMessage("Phone number has to be a valid number")
+            .Must((parent, item, context) =>
+                parent.PhoneNumbers.Count(pn => pn.Number == item.Number) == 1)
+            .WithMessage("Duplicate numbers are not allowed");
     }
 }

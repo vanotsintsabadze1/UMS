@@ -24,11 +24,19 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, UserR
     
     public async Task<UserResponseModel> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
-        var conflictingUser = await _userRepository.GetAsync(us => us.SocialNumber == request.User.SocialNumber, cancellationToken);
+        var userWithConflictingSocialNumber = await _userRepository.GetAsync(us => us.SocialNumber == request.User.SocialNumber, cancellationToken);
         
-        if (conflictingUser is not null)
+        if (userWithConflictingSocialNumber is not null)
             throw new ConflictException("User with such social number exists already");
 
+        var requestPhoneNumbers = request.User.PhoneNumbers.Select(u => u.Number).ToList();
+        var userWithConflictingPhoneNumber = await _userRepository.GetAsync(
+            us => us.PhoneNumbers.Any(pn => requestPhoneNumbers.Contains(pn.Number)),
+            cancellationToken);
+
+        if (userWithConflictingPhoneNumber is not null)
+            throw new ConflictException("User with such phone number already exists");
+        
         if (!_userService.IsEighteen(request.User.DateOfBirth))
             throw new BadRequestException("User has to be at least 18 years old");
 
