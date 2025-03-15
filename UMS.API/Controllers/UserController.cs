@@ -9,6 +9,7 @@ using UMS.Application.CQRS.Commands.User;
 using UMS.Application.CQRS.Queries.User;
 using UMS.Application.Models.Response;
 using UMS.Application.Models.User;
+using UMS.Domain.Enums;
 
 namespace UMS.API.Controllers;
 
@@ -186,5 +187,29 @@ public class UserController : ControllerBase
         var query = new GetUserByIdQuery(id);
         var response = await _mediator.Send(query, cancellationToken);
         return new ApiResponse<UserResponseModel>(response);
+    }
+    
+    /// <summary>
+    /// Gets the user's relationships based on the type
+    /// </summary>
+    /// <remarks><b>Note:</b> If the relationship type is not passed, then all the relationships will be grabbed</remarks>
+    /// <param name="userId"></param>
+    /// <param name="type"></param>
+    /// <param name="cancellationToken"></param>
+    /// <response code="200">If the user relationships were retrieved successfully</response>
+    /// <response code="400">If the data in the request was invalid</response>
+    /// <response code="404">If the user was not found</response>
+    /// <response code="500">If something went wrong on the server</response>
+    [HttpGet("relationships")]
+    [Produces(MediaTypeNames.Application.Json)]
+    [ProducesResponseType(typeof(ApiResponse<UserResponseModel>), 200)]
+    [ProducesResponseType(typeof(ApiResponse), 400)]
+    [ProducesResponseType(typeof(ApiResponse), 404)]
+    [ProducesResponseType(typeof(ApiResponse), 500)]
+    public async Task<ApiResponse<ICollection<UserRelationshipDto>>> GetRelationships(int userId, UserRelationshipTypes? type, CancellationToken cancellationToken)
+    {
+        var query = new GetUserRelationshipsByTypeQuery(userId, type);
+        var response = await _mediator.Send(query, cancellationToken);
+        return new ApiResponse<ICollection<UserRelationshipDto>>(response);
     }
 }
