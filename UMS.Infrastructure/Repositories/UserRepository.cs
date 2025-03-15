@@ -29,7 +29,8 @@ public class UserRepository : BaseRepository<User>, IUserRepository
                 || EF.Functions.Like(u.SocialNumber, pattern))
             .Include(u => u.City)
             .Include(u => u.PhoneNumbers)
-            .Include(u => u.Relationships);
+            .Include(u => u.RelatedUsers)
+            .Include(u => u.RelatedByUsers);
             
         var totalCount = await usersQuery.CountAsync(cancellationToken);
         var users = await usersQuery.ToListAsync(cancellationToken);
@@ -50,7 +51,8 @@ public class UserRepository : BaseRepository<User>, IUserRepository
                 u => u.PhoneNumbers.Any(pn => searchModel.PhoneNumbers.Contains(pn.Number)))
             .Include(u => u.City)
             .Include(u => u.PhoneNumbers)
-            .Include(u => u.Relationships);
+            .Include(u => u.RelatedUsers)
+            .Include(u => u.RelatedByUsers);
 
         var totalCount = await usersQuery.CountAsync(cancellationToken);
         var users = await usersQuery.ToListAsync(cancellationToken);
@@ -63,7 +65,8 @@ public class UserRepository : BaseRepository<User>, IUserRepository
         var user = await _dbSet.Where(predicate)
             .Include(u => u.City)
             .Include(u => u.PhoneNumbers)
-            .Include(u => u.Relationships)
+            .Include(u => u.RelatedUsers)
+            .Include(u => u.RelatedByUsers)
             .FirstOrDefaultAsync(cancellationToken);
 
         return user;

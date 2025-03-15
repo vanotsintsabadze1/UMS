@@ -11,12 +11,12 @@ public class UserRelationshipConfiguration : IEntityTypeConfiguration<UserRelati
         builder.HasKey(u => new { u.UserId, u.RelatedUserId });
 
         builder.HasOne(u => u.User)
-            .WithMany(u => u.Relationships)
+            .WithMany(u => u.RelatedUsers)
             .HasForeignKey(u => u.UserId)
             .OnDelete(DeleteBehavior.NoAction);
 
         builder.HasOne(u => u.RelatedUser)
-            .WithMany()
+            .WithMany(u => u.RelatedByUsers)
             .HasForeignKey(u => u.RelatedUserId)
             .OnDelete(DeleteBehavior.NoAction);
 

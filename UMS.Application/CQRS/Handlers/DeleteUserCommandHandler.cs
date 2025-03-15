@@ -35,19 +35,17 @@ public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, UserR
         if (user is null)
             throw new NotFoundException("User with such id does not exist");
 
-        var indirectUserRelationships = await _relationshipRepository.GetAllAsync(r => r.RelatedUserId == request.UserId, cancellationToken);
-
-        if (indirectUserRelationships.Count != 0)
-            await _relationshipRepository.RemoveRangeAsync(indirectUserRelationships, cancellationToken);
-
         var response = user.Adapt<UserResponseModel>();
 
         try
         {
             await _unitOfWork.BeginTransaction(cancellationToken);
        
-            if (user.Relationships is not null)
-                await _relationshipRepository.RemoveRangeAsync(user.Relationships, cancellationToken);
+            if (user.RelatedUsers is not null)
+                await _relationshipRepository.RemoveRangeAsync(user.RelatedUsers, cancellationToken);
+            
+            if (user.RelatedByUsers is not null)
+                await _relationshipRepository.RemoveRangeAsync(user.RelatedByUsers, cancellationToken);
             
             await _userRepository.DeleteAsync(user, cancellationToken);
             await _unitOfWork.CommitTransaction(cancellationToken);
