@@ -15,6 +15,22 @@ public class UserRepository : BaseRepository<User>, IUserRepository
         _dbSet = dbContext.Set<User>();
     }
 
+    public async Task<ICollection<User>> GetUserByQueryLike(string query, int page, int pageSize, CancellationToken cancellationToken)
+    {
+        var pattern = $"{query}";
+        var offset = (page - 1) * pageSize;
+
+        var users = await _dbSet.Where(u =>
+                EF.Functions.Like(u.Firstname, pattern)
+                || EF.Functions.Like(u.Lastname, pattern)
+                || EF.Functions.Like(u.SocialNumber, pattern))
+            .Skip(offset)
+            .Take(pageSize)
+            .ToListAsync(cancellationToken);
+
+        return users;
+    }
+        
     public new async Task<User> GetAsync(Expression<Func<User, bool>> predicate, CancellationToken cancellationToken)
     {
         var user = await _dbSet.Where(predicate)
@@ -25,4 +41,5 @@ public class UserRepository : BaseRepository<User>, IUserRepository
 
         return user;
     }
+    
 }
