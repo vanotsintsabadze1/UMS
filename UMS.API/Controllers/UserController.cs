@@ -22,6 +22,26 @@ public class UserController : ControllerBase
     {
         _mediator = mediator;
     }
+
+    /// <summary>
+    /// Gets the user by quick search query
+    /// </summary>
+    /// <param name="searchQuery"></param>
+    /// <param name="page"></param>
+    /// <param name="pageSize"></param>
+    /// <param name="cancellationToken"></param>
+    /// <response code="200">If the query was successful</response>
+    /// <response code="400">If the data in the request was invalid</response>
+    /// <response code="500">If some unexpected error happened on the server</response>
+    [HttpGet("search", Name = "GetUsersByQuickSearch")]
+    [Produces(MediaTypeNames.Application.Json)]
+    [ProducesResponseType(typeof(ApiResponse<UserResponseModel>), 200)]
+    public async Task<ApiResponse<ICollection<UserResponseModel>>> GetByQuickSearch([FromQuery] string searchQuery, int? page, int? pageSize, CancellationToken cancellationToken)
+    {
+        var query = new GetUserByQuickSearchQuery(searchQuery, page, pageSize);
+        var response = await _mediator.Send(query, cancellationToken);
+        return new ApiResponse<ICollection<UserResponseModel>>(response);
+    }
     
     /// <summary>
     /// Creates the user 
