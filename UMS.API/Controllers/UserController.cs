@@ -7,6 +7,7 @@ using UMS.API.Models;
 using UMS.API.Models.Response;
 using UMS.Application.CQRS.Commands.User;
 using UMS.Application.CQRS.Queries.User;
+using UMS.Application.Models.Response;
 using UMS.Application.Models.User;
 
 namespace UMS.API.Controllers;
@@ -36,11 +37,11 @@ public class UserController : ControllerBase
     [HttpGet("search", Name = "GetUsersByQuickSearch")]
     [Produces(MediaTypeNames.Application.Json)]
     [ProducesResponseType(typeof(ApiResponse<UserResponseModel>), 200)]
-    public async Task<ApiResponse<ICollection<UserResponseModel>>> GetByQuickSearch([FromQuery] string searchQuery, int? page, int? pageSize, CancellationToken cancellationToken)
+    public async Task<ApiResponse<PaginatedResponseModel<ICollection<UserResponseModel>>>> GetByQuickSearch([FromQuery] string searchQuery, int? page, int? pageSize, CancellationToken cancellationToken)
     {
         var query = new GetUserByQuickSearchQuery(searchQuery, page, pageSize);
         var response = await _mediator.Send(query, cancellationToken);
-        return new ApiResponse<ICollection<UserResponseModel>>(response);
+        return new ApiResponse<PaginatedResponseModel<ICollection<UserResponseModel>>>(response);
     }
     
     /// <summary>
