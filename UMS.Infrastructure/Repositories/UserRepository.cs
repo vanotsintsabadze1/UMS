@@ -19,7 +19,7 @@ public class UserRepository : BaseRepository<User>, IUserRepository
 
     public async Task<(ICollection<User> Users, int TotalCount)> GetUserByQueryLike(string query, int page, int pageSize, CancellationToken cancellationToken)
     {
-        var pattern = $"{query}";
+        var pattern = $"%{query}%";
         var offset = (page - 1) * pageSize;
 
         var usersQuery = _dbSet.Where(u =>
