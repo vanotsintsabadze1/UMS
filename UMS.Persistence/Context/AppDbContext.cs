@@ -28,5 +28,11 @@ public class AppDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
+        modelBuilder.Entity<City>().HasData(
+            new City() { Id = 1, Name = "Tbilisi" },
+            new City() { Id = 2, Name = "Batumi"},
+            new City() { Id = 3, Name = "Kutaisi"}
+        );
     }
 }

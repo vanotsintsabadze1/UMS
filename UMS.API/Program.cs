@@ -1,6 +1,7 @@
 using UMS.API.Infrastructure.Extensions;
 using UMS.Application.Extensions;
 using UMS.Infrastructure.Extensions;
+using UMS.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,5 +26,10 @@ app.UseHttpsRedirection();
 app.UseRouting();
 app.UseGlobalExceptionHandling();
 app.MapControllers();
+
+if (builder.Environment.IsDevelopment())
+{
+    await DbMigrator.Migrate(app.Services);
+}
 
 app.Run();
