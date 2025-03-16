@@ -24,4 +24,5 @@ public static class ErrorMessageNames
     public static readonly string RelationshipExistsAlready = "Relationship_ExistsAlready";
     public static readonly string RelationshipDoesNotExist = "Relationship_DoesNotExist";
     public static readonly string FileDoesNotExist = "File_DoesNotExist";
+    public static readonly string UnexpectedError = "UnexpectedError";
 }

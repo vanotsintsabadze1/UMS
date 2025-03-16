@@ -66,4 +66,7 @@
     <data name="File_DoesNotExist" xml:space="preserve">
         <value>ფაილი ვერ მოიძებნა</value>
     </data>
+    <data name="UnexpectedError" xml:space="preserve">
+        <value>დაფიქსირდა მოულოდნელი შეცდომა სერვერზე, გთხოვთ სცადოთ მოგვიანებით</value>
+    </data>
 </root>

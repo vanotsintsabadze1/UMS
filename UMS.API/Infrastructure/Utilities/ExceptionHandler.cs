@@ -1,7 +1,9 @@
 ﻿using System.Net;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.Extensions.Localization;
 using UMS.API.Models.Response;
 using UMS.Application.Exceptions;
+using UMS.Domain.Resources;
 
 namespace UMS.API.Infrastructure.Utilities;
 
@@ -15,18 +17,18 @@ public static class ExceptionHandler
             { typeof(NotFoundException), (exception) => HandleNotFoundException((NotFoundException)exception)}
         };
 
-    public static ExceptionHandlerResponse Handle(Exception ex)
+    public static ExceptionHandlerResponse Handle(Exception ex, IStringLocalizer<ErrorMessages> localizer)
     {
         return _handlers.TryGetValue(ex.GetType(), out var handler)
             ? handler(ex)
-            : HandleDefault(ex);
+            : HandleDefault(ex, localizer);
     }
 
-    private static ExceptionHandlerResponse HandleDefault(Exception ex)
+    private static ExceptionHandlerResponse HandleDefault(Exception ex, IStringLocalizer<ErrorMessages> localizer)
     {
         return new ExceptionHandlerResponse(
             (int)HttpStatusCode.InternalServerError,
-            new ApiResponse("Unexpected error happened on the server while trying to serve the response"));
+            new ApiResponse(localizer[ErrorMessageNames.UnexpectedError]));
     }
 
     private static ExceptionHandlerResponse HandleConflictException(ConflictException exception)

@@ -150,6 +150,15 @@ namespace UMS.API.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to დაფიქსირდა მოულოდნელი შეცდომა სერვერზე, გთხოვთ სცადოთ მოგვიანებით.
+        /// </summary>
+        internal static string UnexpectedError {
+            get {
+                return ResourceManager.GetString("UnexpectedError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to მომხმარებელი ამ სოციალური ნომრით უკვე არსებობს.
         /// </summary>
         internal static string User_AlreadyExistsWithSocialNumber {

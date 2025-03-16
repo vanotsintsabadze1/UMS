@@ -150,6 +150,15 @@ namespace UMS.API.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unexpected error happened on the server while trying to serve the response.
+        /// </summary>
+        internal static string UnexpectedError {
+            get {
+                return ResourceManager.GetString("UnexpectedError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A user with this social number already exists.
         /// </summary>
         internal static string User_AlreadyExistsWithSocialNumber {

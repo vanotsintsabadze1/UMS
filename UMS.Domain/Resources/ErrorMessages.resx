@@ -66,4 +66,7 @@
     <data name="File_DoesNotExist" xml:space="preserve">
         <value>File not found</value>
     </data>
+    <data name="UnexpectedError" xml:space="preserve">
+        <value>Unexpected error happened on the server while trying to serve the response</value>
+    </data>
 </root>
