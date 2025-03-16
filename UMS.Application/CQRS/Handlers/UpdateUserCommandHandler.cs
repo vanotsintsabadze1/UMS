@@ -1,10 +1,12 @@
 ﻿using Mapster;
 using MediatR;
+using Microsoft.Extensions.Localization;
 using UMS.Application.CQRS.Commands.User;
 using UMS.Application.Exceptions;
 using UMS.Application.Interfaces.Repositories;
 using UMS.Application.Interfaces.Services;
 using UMS.Application.Models.User;
+using UMS.Domain.Resources;
 
 namespace UMS.Application.CQRS.Handlers;
 
@@ -13,12 +15,18 @@ public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, UserR
     private readonly IUserRepository _userRepository;
     private readonly ICityRepository _cityRepository;
     private readonly IUserService _userService;
+    private readonly IStringLocalizer<ErrorMessages> _localizer;
     
-    public UpdateUserCommandHandler(IUserRepository userRepository, ICityRepository cityRepository, IUserService userService)
+    public UpdateUserCommandHandler
+    (IUserRepository userRepository,
+        ICityRepository cityRepository,
+        IUserService userService,
+        IStringLocalizer<ErrorMessages> localizer)
     {
         _userRepository = userRepository;
         _cityRepository = cityRepository;
         _userService = userService;
+        _localizer = localizer;
     }
 
     public async Task<UserResponseModel> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
@@ -26,15 +34,15 @@ public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, UserR
         var userDb = await _userRepository.GetAsync(u => u.Id == request.UserId, cancellationToken);
 
         if (userDb is null)
-            throw new NotFoundException("Such user does not exist");
+            throw new NotFoundException(_localizer[ErrorMessageNames.UserDoesNotExist]);
 
         if (!_userService.IsEighteen(request.User.DateOfBirth))
-            throw new BadRequestException("Updated user age can't be below 18");
+            throw new BadRequestException(_localizer[ErrorMessageNames.UserMustBeAtLeast18YearsOld]);
 
         var city = await _cityRepository.GetAsync(c => c.Id == request.User.CityId, cancellationToken);
 
         if (city is null)
-            throw new BadRequestException("City with the given id does not exist");
+            throw new BadRequestException(_localizer[ErrorMessageNames.ProvidedCityDoesNotExist]);
         
         request.User.Adapt(userDb);
 

@@ -1,11 +1,13 @@
 ﻿using Mapster;
 using MediatR;
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using UMS.Application.CQRS.Commands.User;
 using UMS.Application.Exceptions;
 using UMS.Application.Interfaces.Repositories;
 using UMS.Application.Interfaces.UOW;
 using UMS.Application.Models.User;
+using UMS.Domain.Resources;
 
 namespace UMS.Application.CQRS.Handlers;
 
@@ -14,12 +16,19 @@ public class ChangeProfileImageCommandHandler : IRequestHandler<ChangeProfileIma
     private readonly IUserRepository _userRepository;
     private readonly IImageRepository _imageRepository;
     private readonly ILogger<ChangeProfileImageCommandHandler> _logger;
+    private readonly IStringLocalizer<ErrorMessages> _localizer;
     private readonly IUnitOfWork _unitOfWork;
 
-    public ChangeProfileImageCommandHandler(IUserRepository userRepository, IImageRepository imageRepository, ILogger<ChangeProfileImageCommandHandler> logger, IUnitOfWork unitOfWork)
+    public ChangeProfileImageCommandHandler(
+        IUserRepository userRepository,
+        IImageRepository imageRepository,
+        ILogger<ChangeProfileImageCommandHandler> logger,
+        IUnitOfWork unitOfWork,
+        IStringLocalizer<ErrorMessages> localizer)
     {
         _userRepository = userRepository;
         _imageRepository = imageRepository;
+        _localizer = localizer;
         _logger = logger;
         _unitOfWork = unitOfWork;
     }
@@ -29,7 +38,7 @@ public class ChangeProfileImageCommandHandler : IRequestHandler<ChangeProfileIma
         var user = await _userRepository.GetAsync(u => u.Id == request.UserId, cancellationToken);
 
         if (user is null)
-            throw new NotFoundException("User does not exist");
+            throw new NotFoundException(_localizer[ErrorMessageNames.UserDoesNotExist]);
 
         try
         {

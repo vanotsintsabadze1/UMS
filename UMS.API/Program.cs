@@ -9,6 +9,7 @@ builder.Services.ConfigureControllers();
 builder.Services.ConfigureSwagger();
 builder.Services.ConfigureVersioning();
 builder.Services.ConfigureValidation();
+builder.Services.AddLocalization();
 
 builder.Logging.ConfigureLogging();
 
@@ -17,6 +18,7 @@ builder.Services.AddInfrastructureServices()
 
 var app = builder.Build();
 
+app.UseConfiguredLocalization();
 app.UseConfiguredSwagger();
 app.UseVersioning();
 app.UseHttpsRedirection();

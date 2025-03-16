@@ -1,11 +1,13 @@
 ﻿using Mapster;
 using MediatR;
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using UMS.Application.CQRS.Commands.User;
 using UMS.Application.Exceptions;
 using UMS.Application.Interfaces.Repositories;
 using UMS.Application.Interfaces.UOW;
 using UMS.Application.Models.User;
+using UMS.Domain.Resources;
 
 namespace UMS.Application.CQRS.Handlers;
 
@@ -13,6 +15,7 @@ public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, UserR
 {
     private readonly IUserRepository _userRepository;
     private readonly IRelationshipRepository _relationshipRepository;
+    private readonly IStringLocalizer<ErrorMessages> _localizer;
     private readonly ILogger<DeleteUserCommandHandler> _logger;
     private readonly IUnitOfWork _unitOfWork;
 
@@ -20,10 +23,12 @@ public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, UserR
         IUserRepository userRepository,
         IRelationshipRepository relationshipRepository, 
         ILogger<DeleteUserCommandHandler> logger,
+        IStringLocalizer<ErrorMessages> localizer,
         IUnitOfWork unitOfWork)
     {
         _userRepository = userRepository;
         _relationshipRepository = relationshipRepository;
+        _localizer = localizer;
         _logger = logger;
         _unitOfWork = unitOfWork;
     }
@@ -33,7 +38,7 @@ public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, UserR
         var user = await _userRepository.GetAsync(u => u.Id == request.UserId, cancellationToken);
 
         if (user is null)
-            throw new NotFoundException("User with such id does not exist");
+            throw new NotFoundException(_localizer[ErrorMessageNames.UserDoesNotExist]);
 
         var response = user.Adapt<UserResponseModel>();
 

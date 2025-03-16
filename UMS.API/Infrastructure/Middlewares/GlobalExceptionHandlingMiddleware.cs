@@ -1,18 +1,23 @@
 ﻿using System.Net;
+using System.Net.Mime;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Microsoft.Extensions.Localization;
 using Serilog;
 using UMS.API.Infrastructure.Utilities;
+using UMS.Domain.Resources;
 
 namespace UMS.API.Infrastructure.Middlewares;
 
 public class GlobalExceptionHandlingMiddleware
 {
     private readonly RequestDelegate _next;
+    private readonly IStringLocalizer<ErrorMessages> _localizer;
 
-    public GlobalExceptionHandlingMiddleware(RequestDelegate requestDelegate)
+    public GlobalExceptionHandlingMiddleware(RequestDelegate requestDelegate, IStringLocalizer<ErrorMessages> localizer)
     {
         _next = requestDelegate;
+        _localizer = localizer;
     }
 
     public async Task Invoke(HttpContext httpContext)
@@ -29,7 +34,7 @@ public class GlobalExceptionHandlingMiddleware
 
     private async Task HandleExceptionAsync(HttpContext httpContext, Exception exception)
     {
-        var (statusCode, response) = ExceptionHandler.Handle(exception);
+        var (statusCode, response) = ExceptionHandler.Handle(exception, _localizer);
 
         var jsonSerializer = new JsonSerializerOptions()
         {
@@ -42,20 +47,22 @@ public class GlobalExceptionHandlingMiddleware
         if (statusCode == (int)HttpStatusCode.InternalServerError)
         {
             Log.Fatal(
-                "Critical error occured - {0} \n - {1}", 
+                "Critical error occured - {0} \n {1} \n {2}",
+                exception.Message,
                 exception.StackTrace, 
                 exception.InnerException);
         }
         else
         {
             Log.Error(
-                "Error occured - {0} \n - {1}",
+                "Error occured - {0} \n {1} \n {2}",
+                exception.Message,
                 exception.StackTrace,
                 exception.InnerException);
         }
 
         httpContext.Response.StatusCode = statusCode;
-        httpContext.Response.ContentType = "application/json";
+        httpContext.Response.ContentType = MediaTypeNames.Application.Json;
 
         await httpContext.Response.WriteAsync(serializedException);
     }

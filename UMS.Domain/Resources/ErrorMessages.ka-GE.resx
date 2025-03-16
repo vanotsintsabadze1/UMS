@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+            
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="Validation" xml:space="preserve">
+        <value>მოთხოვნაში არსებული მონაცემები არ შეესაბამება ვალიდაციის წესებს</value>
+    </data>
+    <data name="Property_MustBeNumber" xml:space="preserve">
+        <value>მონაცემი უნდა იყოს რიცხვი და არ უნდა მოიცავდეს რაიმე ასოს</value>
+    </data>
+    <data name="SocialNumber_LengthMustBeEleven" xml:space="preserve">
+        <value>პირადი ნომერი უნდა შედგებოდეს 11 ციფრისგან</value>
+    </data>
+    <data name="Property_MustBelongToSingleAlphabet" xml:space="preserve">
+        <value>მონაცემი უნდა მიეკუთვნებოდეს მხოლოდ ლათინურ ან ქართულ ალფავიტს</value>
+    </data>
+    <data name="PhoneNumber_CantBeEmpty" xml:space="preserve">
+        <value>ტელეფონის ნომერი არ შეიძლება იყოს ცარიელი</value>
+    </data>
+    <data name="PhoneNumber_CantBeDuplicate" xml:space="preserve">
+        <value>ერთი და იგივე ტელეფონის ნომრების არსებობა აკრძალულია</value>
+    </data>
+    <data name="Image_MustBeImage" xml:space="preserve">
+        <value>ატვირთული ფოტო არ შეესაბამება სწორ ფოტოს ტიპს</value>
+    </data>
+    <data name="User_DoesNotExist" xml:space="preserve">
+        <value>მომხმარებელი არ არსებობს</value>
+    </data>
+    <data name="User_AlreadyExistsWithSocialNumber" xml:space="preserve">
+        <value>მომხმარებელი ამ სოციალური ნომრით უკვე არსებობს</value>
+    </data>
+    <data name="User_WithPhoneNumberExists" xml:space="preserve">
+        <value>მომხმარებელი ამ ტელეფონის ნომრით უკვე არსებობს</value>
+    </data>
+    <data name="User_MustBeAtLeast18YearsOld" xml:space="preserve">
+        <value>მომხმარებელი უნდა იყოს მინიმუმ 18 წლის</value>
+    </data>
+    <data name="ProvidedCity_DoesNotExist" xml:space="preserve">
+        <value>მითითებული ქალაქი არასწორია</value>
+    </data>
+    <data name="Users_InRelationshipDoNotExist" xml:space="preserve">
+        <value>ურთიერთობაში მითითებული ერთ-ერთი მომხმარებელი არასწორია</value>
+    </data>
+    <data name="Relationship_ExistsAlready" xml:space="preserve">
+        <value>ეს ურთიერთობა უკვე არსებობს</value>
+    </data>
+    <data name="Relationship_DoesNotExist" xml:space="preserve">
+        <value>ასეთი ურთიერთობა არ არსებობს</value>
+    </data>
+    <data name="File_DoesNotExist" xml:space="preserve">
+        <value>ფაილი ვერ მოიძებნა</value>
+    </data>
+    <data name="UnexpectedError" xml:space="preserve">
+        <value>დაფიქსირდა მოულოდნელი შეცდომა სერვერზე, გთხოვთ სცადოთ მოგვიანებით</value>
+    </data>
+</root>
