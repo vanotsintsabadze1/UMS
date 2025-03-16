@@ -23,8 +23,11 @@ public static class ValidationExtensions
                     var errors = context.ModelState
                         .Where(e => e.Value?.Errors.Count > 0)
                         .ToDictionary(
-                            e => e.Key.ToLowerInvariant(),
-                            e => e.Value!.Errors.Select(err => err.ErrorMessage)
+                            e => e.Key == "$" ? "general" : e.Key.ToLowerInvariant(),  
+                            e => e.Value!.Errors.Select(err => 
+                                    e.Key == "$" 
+                                        ? "Invalid JSON format - Request either has extra commas or misses required properties"  // Custom message
+                                        : err.ErrorMessage)
                                 .ToArray());
 
                     var response = new ApiResponse(localizer[ErrorMessageNames.Validation], errors);
