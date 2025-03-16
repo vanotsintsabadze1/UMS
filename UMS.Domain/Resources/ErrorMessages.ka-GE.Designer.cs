@@ -195,6 +195,15 @@ namespace UMS.API.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to მომხმარებელი მოწოდებული სოციალური ნომრით ან ტელეფონის ნომრით უკვე არსებობს.
+        /// </summary>
+        internal static string User_WithSnOrPnAlreadyExists {
+            get {
+                return ResourceManager.GetString("User_WithSnOrPnAlreadyExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ურთიერთობაში მითითებული ერთ-ერთი მომხმარებელი არასწორია.
         /// </summary>
         internal static string Users_InRelationshipDoNotExist {

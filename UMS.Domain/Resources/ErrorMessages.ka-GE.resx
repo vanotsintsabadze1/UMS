@@ -69,4 +69,7 @@
     <data name="UnexpectedError" xml:space="preserve">
         <value>დაფიქსირდა მოულოდნელი შეცდომა სერვერზე, გთხოვთ სცადოთ მოგვიანებით</value>
     </data>
+    <data name="User_WithSnOrPnAlreadyExists" xml:space="preserve">
+        <value>მომხმარებელი მოწოდებული სოციალური ნომრით ან ტელეფონის ნომრით უკვე არსებობს</value>
+    </data>
 </root>
