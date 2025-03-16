@@ -18,7 +18,25 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-    <data name="ValidationError" xml:space="preserve">
+    <data name="Validation" xml:space="preserve">
         <value>მოთხოვნაში არსებული მონაცემები არ შეესაბამება ვალიდაციის წესებს</value>
+    </data>
+    <data name="Property_MustBeNumber" xml:space="preserve">
+        <value>მონაცემი უნდა იყოს რიცხვი და არ უნდა მოიცავდეს რაიმე ასოს</value>
+    </data>
+    <data name="SocialNumber_LengthMustBeEleven" xml:space="preserve">
+        <value>პირადი ნომერი უნდა შედგებოდეს 11 ციფრისგან</value>
+    </data>
+    <data name="Property_MustBelongToSingleAlphabet" xml:space="preserve">
+        <value>მონაცემი უნდა მიეკუთვნებოდეს მხოლოდ ლათინურ ან ქართულ ალფავიტს</value>
+    </data>
+    <data name="PhoneNumber_CantBeEmpty" xml:space="preserve">
+        <value>ტელეფონის ნომერი არ შეიძლება იყოს ცარიელი</value>
+    </data>
+    <data name="PhoneNumber_CantBeDuplicate" xml:space="preserve">
+        <value>ერთი და იგივე ტელეფონის ნომრების არსებობა აკრძალულია</value>
+    </data>
+    <data name="Image_MustBeImage" xml:space="preserve">
+        <value>ატვირთული ფოტო არ შეესაბამება სწორ ფოტოს ტიპს</value>
     </data>
 </root>

@@ -60,11 +60,65 @@ namespace UMS.API.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Uploaded file is not an image.
+        /// </summary>
+        internal static string Image_MustBeImage {
+            get {
+                return ResourceManager.GetString("Image_MustBeImage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Duplicate phone numbers are not allowed.
+        /// </summary>
+        internal static string PhoneNumber_CantBeDuplicate {
+            get {
+                return ResourceManager.GetString("PhoneNumber_CantBeDuplicate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Phone number can not be empty.
+        /// </summary>
+        internal static string PhoneNumber_CantBeEmpty {
+            get {
+                return ResourceManager.GetString("PhoneNumber_CantBeEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Property must belong to either Latin or Georgian alphabet.
+        /// </summary>
+        internal static string Property_MustBelongToSingleAlphabet {
+            get {
+                return ResourceManager.GetString("Property_MustBelongToSingleAlphabet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Property has to be a number.
+        /// </summary>
+        internal static string Property_MustBeNumber {
+            get {
+                return ResourceManager.GetString("Property_MustBeNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Length of the social number has to be 11.
+        /// </summary>
+        internal static string SocialNumber_LengthMustBeEleven {
+            get {
+                return ResourceManager.GetString("SocialNumber_LengthMustBeEleven", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The data in the request does not follow validation rules.
         /// </summary>
-        internal static string ValidationError {
+        internal static string Validation {
             get {
-                return ResourceManager.GetString("ValidationError", resourceCulture);
+                return ResourceManager.GetString("Validation", resourceCulture);
             }
         }
     }

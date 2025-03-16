@@ -60,11 +60,65 @@ namespace UMS.API.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ატვირთული ფოტო არ შეესაბამება სწორ ფოტოს ტიპს.
+        /// </summary>
+        internal static string Image_MustBeImage {
+            get {
+                return ResourceManager.GetString("Image_MustBeImage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ერთი და იგივე ტელეფონის ნომრების არსებობა აკრძალულია.
+        /// </summary>
+        internal static string PhoneNumber_CantBeDuplicate {
+            get {
+                return ResourceManager.GetString("PhoneNumber_CantBeDuplicate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ტელეფონის ნომერი არ შეიძლება იყოს ცარიელი.
+        /// </summary>
+        internal static string PhoneNumber_CantBeEmpty {
+            get {
+                return ResourceManager.GetString("PhoneNumber_CantBeEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to მონაცემი უნდა მიეკუთვნებოდეს მხოლოდ ლათინურ ან ქართულ ალფავიტს.
+        /// </summary>
+        internal static string Property_MustBelongToSingleAlphabet {
+            get {
+                return ResourceManager.GetString("Property_MustBelongToSingleAlphabet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to მონაცემი უნდა იყოს რიცხვი და არ უნდა მოიცავდეს რაიმე ასოს.
+        /// </summary>
+        internal static string Property_MustBeNumber {
+            get {
+                return ResourceManager.GetString("Property_MustBeNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to პირადი ნომერი უნდა შედგებოდეს 11 ციფრისგან.
+        /// </summary>
+        internal static string SocialNumber_LengthMustBeEleven {
+            get {
+                return ResourceManager.GetString("SocialNumber_LengthMustBeEleven", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to მოთხოვნაში არსებული მონაცემები არ შეესაბამება ვალიდაციის წესებს.
         /// </summary>
-        internal static string ValidationError {
+        internal static string Validation {
             get {
-                return ResourceManager.GetString("ValidationError", resourceCulture);
+                return ResourceManager.GetString("Validation", resourceCulture);
             }
         }
     }

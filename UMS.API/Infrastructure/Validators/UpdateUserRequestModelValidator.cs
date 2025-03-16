@@ -1,34 +1,40 @@
 ﻿using FluentValidation;
+using Microsoft.Extensions.Localization;
 using UMS.API.Infrastructure.Extensions;
 using UMS.Application.Models.User;
+using UMS.Domain.Resources;
 
 namespace UMS.API.Infrastructure.Validators;
 
 public class UpdateUserRequestModelValidator : AbstractValidator<UpdateUserRequestModel>
 {
-    public UpdateUserRequestModelValidator()
+    public UpdateUserRequestModelValidator(IStringLocalizer<ErrorMessages> localizer)
     {
         RuleFor(u => u.Firstname)
             .MinimumLength(2)
             .MaximumLength(50)
-            .MustBelongToSingleAlphabet();
+            .MustBelongToSingleAlphabet()
+            .WithMessage(localizer[ErrorMessageNames.PropertyMustBelongTosingleAlphabet]);
 
         RuleFor(u => u.Lastname)
             .MinimumLength(2)
             .MaximumLength(50)
-            .MustBelongToSingleAlphabet();
+            .MustBelongToSingleAlphabet()
+            .WithMessage(localizer[ErrorMessageNames.PropertyMustBelongTosingleAlphabet]);
 
         RuleFor(u => u.SocialNumber)
             .Length(11)
-            .MustBeParsedIntoNumber();
-            
+            .WithMessage(localizer[ErrorMessageNames.SocialNumberLengthMustBeEleven])
+            .MustBeParsedIntoNumber()
+            .WithMessage((_, _) => localizer[ErrorMessageNames.PropertyMustBeNumberError]);
+
         RuleForEach(u => u.PhoneNumbers)
             .NotEmpty()
-            .WithMessage("Phone number can't be empty")
+            .WithMessage(localizer[ErrorMessageNames.PhoneNumberCanNotBeEmpty])
             .Must(u => long.TryParse(u.Number, out _))
-            .WithMessage("Phone number has to be a valid number")
+            .WithMessage(localizer[ErrorMessageNames.PropertyMustBeNumberError])
             .Must((parent, item, context) =>
                 parent.PhoneNumbers.Count(pn => pn.Number == item.Number) == 1)
-            .WithMessage("Duplicate numbers are not allowed");
+            .WithMessage(localizer[ErrorMessageNames.PhoneNumberCantBeDuplicate]);
     }
 }

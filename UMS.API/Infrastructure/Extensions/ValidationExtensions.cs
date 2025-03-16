@@ -2,7 +2,9 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using UMS.API.Models.Response;
+using UMS.Domain.Resources;
 
 namespace UMS.API.Infrastructure.Extensions;
 
@@ -13,6 +15,9 @@ public static class ValidationExtensions
         services.AddControllers()
             .ConfigureApiBehaviorOptions(options =>
             {
+                var serviceProvider = services.BuildServiceProvider();
+                var localizer = serviceProvider.GetRequiredService<IStringLocalizer<ErrorMessages>>();
+                
                 options.InvalidModelStateResponseFactory = context =>
                 {
                     var errors = context.ModelState
@@ -22,7 +27,7 @@ public static class ValidationExtensions
                             e => e.Value!.Errors.Select(err => err.ErrorMessage)
                                 .ToArray());
 
-                    var response = new ApiResponse("The given data does not follow validation rules", errors);
+                    var response = new ApiResponse(localizer[ErrorMessageNames.Validation], errors);
 
                     return new BadRequestObjectResult(response);
                 };
@@ -39,14 +44,14 @@ public static class ValidationExtensions
         where T : class
     {
         return ruleBuilder
-            .Matches(@"^[a-zA-Z]+$|^[ა-ჰ]+$")
-            .WithMessage("Name must contain only Latin or only Georgian letters.");
+            .Matches(@"^[a-zA-Z]+$|^[ა-ჰ]+$");
+//             .WithMessage(localizer[ErrorMessageNames.PropertyMustBelongTosingleAlphabet]);
     }
 
     public static IRuleBuilderOptions<T, string> MustBeParsedIntoNumber<T>(this IRuleBuilder<T, string> ruleBuilder)
     {
         return ruleBuilder
-            .Must(val => long.TryParse(val, out _))
-            .WithMessage((_, val) => $"{val} is not a valid number");
+            .Must(val => long.TryParse(val, out _));
+        // .WithMessage((_, _) => localizer[ErrorMessageNames.PropertyMustBeNumberError]);
     }
 }
