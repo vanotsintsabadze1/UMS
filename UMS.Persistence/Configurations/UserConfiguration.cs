@@ -14,6 +14,11 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .IsRequired()
             .UseIdentityColumn(1, 1);
 
+        builder.HasIndex(u => new {u.Firstname, u.Lastname});
+        
+        builder.HasIndex(u => u.SocialNumber)
+            .IsUnique();
+
         builder.Property(u => u.Firstname)
             .IsRequired()
             .HasMaxLength(50);
