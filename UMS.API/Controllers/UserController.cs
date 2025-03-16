@@ -123,6 +123,9 @@ public class UserController : ControllerBase
     /// \
     /// \
     /// <b>Relationship types can be</b>: Colleague, Friend, Relative, Other
+    /// \
+    /// \
+    /// <b>City IDs can be</b>: 1 (Tbilisi), 2 (Batumi), 3 (Kutaisi)
     /// </remarks>
     /// <param name="user"></param>
     /// <param name="cancellationToken"></param>
