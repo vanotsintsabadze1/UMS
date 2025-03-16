@@ -195,6 +195,15 @@ namespace UMS.API.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A user with the provided social number or phone number already exists.
+        /// </summary>
+        internal static string User_WithSnOrPnAlreadyExists {
+            get {
+                return ResourceManager.GetString("User_WithSnOrPnAlreadyExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to One or more users in the relationship are invalid.
         /// </summary>
         internal static string Users_InRelationshipDoNotExist {

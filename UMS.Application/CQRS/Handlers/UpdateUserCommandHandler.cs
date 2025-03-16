@@ -36,6 +36,20 @@ public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, UserR
         if (userDb is null)
             throw new NotFoundException(_localizer[ErrorMessageNames.UserDoesNotExist]);
 
+        var requestPhoneNumbers = request.User.PhoneNumbers.Select(x => x.Number).ToList();
+
+        var conflictingUser = await _userRepository.GetAsync(u => 
+                u.Id != request.UserId && // Exclude the current user
+                (
+                    u.SocialNumber == request.User.SocialNumber ||
+                    u.PhoneNumbers.Any(pn => requestPhoneNumbers.Contains(pn.Number))
+                ),
+            cancellationToken
+        );
+
+        if (conflictingUser is not null)
+            throw new ConflictException(_localizer[ErrorMessageNames.UserAlreadyExistsWithSocialNumberOrPhoneNumber]);
+        
         if (!_userService.IsEighteen(request.User.DateOfBirth))
             throw new BadRequestException(_localizer[ErrorMessageNames.UserMustBeAtLeast18YearsOld]);
 

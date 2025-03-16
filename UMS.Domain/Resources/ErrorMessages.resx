@@ -69,4 +69,7 @@
     <data name="UnexpectedError" xml:space="preserve">
         <value>Unexpected error happened on the server while trying to serve the response</value>
     </data>
+    <data name="User_WithSnOrPnAlreadyExists" xml:space="preserve">
+        <value>A user with the provided social number or phone number already exists</value>
+    </data>
 </root>
