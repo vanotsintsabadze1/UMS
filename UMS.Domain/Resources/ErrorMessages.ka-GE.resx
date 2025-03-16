@@ -39,4 +39,31 @@
     <data name="Image_MustBeImage" xml:space="preserve">
         <value>ატვირთული ფოტო არ შეესაბამება სწორ ფოტოს ტიპს</value>
     </data>
+    <data name="User_DoesNotExist" xml:space="preserve">
+        <value>მომხმარებელი არ არსებობს</value>
+    </data>
+    <data name="User_AlreadyExistsWithSocialNumber" xml:space="preserve">
+        <value>მომხმარებელი ამ სოციალური ნომრით უკვე არსებობს</value>
+    </data>
+    <data name="User_WithPhoneNumberExists" xml:space="preserve">
+        <value>მომხმარებელი ამ ტელეფონის ნომრით უკვე არსებობს</value>
+    </data>
+    <data name="User_MustBeAtLeast18YearsOld" xml:space="preserve">
+        <value>მომხმარებელი უნდა იყოს მინიმუმ 18 წლის</value>
+    </data>
+    <data name="ProvidedCity_DoesNotExist" xml:space="preserve">
+        <value>მითითებული ქალაქი არასწორია</value>
+    </data>
+    <data name="Users_InRelationshipDoNotExist" xml:space="preserve">
+        <value>ურთიერთობაში მითითებული ერთ-ერთი მომხმარებელი არასწორია</value>
+    </data>
+    <data name="Relationship_ExistsAlready" xml:space="preserve">
+        <value>ეს ურთიერთობა უკვე არსებობს</value>
+    </data>
+    <data name="Relationship_DoesNotExist" xml:space="preserve">
+        <value>ასეთი ურთიერთობა არ არსებობს</value>
+    </data>
+    <data name="File_DoesNotExist" xml:space="preserve">
+        <value>ფაილი ვერ მოიძებნა</value>
+    </data>
 </root>

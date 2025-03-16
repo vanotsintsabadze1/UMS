@@ -39,4 +39,31 @@
     <data name="Image_MustBeImage" xml:space="preserve">
         <value>Uploaded file is not an image</value>
     </data>
+    <data name="User_DoesNotExist" xml:space="preserve">
+        <value>User does not exist</value>
+    </data>
+    <data name="User_AlreadyExistsWithSocialNumber" xml:space="preserve">
+        <value>A user with this social number already exists</value>
+    </data>
+    <data name="User_WithPhoneNumberExists" xml:space="preserve">
+        <value>A user with this phone number already exists</value>
+    </data>
+    <data name="User_MustBeAtLeast18YearsOld" xml:space="preserve">
+        <value>User must be at least 18 years old</value>
+    </data>
+    <data name="ProvidedCity_DoesNotExist" xml:space="preserve">
+        <value>The provided city is invalid</value>
+    </data>
+    <data name="Users_InRelationshipDoNotExist" xml:space="preserve">
+        <value>One or more users in the relationship are invalid</value>
+    </data>
+    <data name="Relationship_ExistsAlready" xml:space="preserve">
+        <value>This relationship already exists</value>
+    </data>
+    <data name="Relationship_DoesNotExist" xml:space="preserve">
+        <value>No such relationship exists</value>
+    </data>
+    <data name="File_DoesNotExist" xml:space="preserve">
+        <value>File not found</value>
+    </data>
 </root>

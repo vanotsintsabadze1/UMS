@@ -60,6 +60,15 @@ namespace UMS.API.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ფაილი ვერ მოიძებნა.
+        /// </summary>
+        internal static string File_DoesNotExist {
+            get {
+                return ResourceManager.GetString("File_DoesNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ატვირთული ფოტო არ შეესაბამება სწორ ფოტოს ტიპს.
         /// </summary>
         internal static string Image_MustBeImage {
@@ -105,11 +114,83 @@ namespace UMS.API.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to მითითებული ქალაქი არასწორია.
+        /// </summary>
+        internal static string ProvidedCity_DoesNotExist {
+            get {
+                return ResourceManager.GetString("ProvidedCity_DoesNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ასეთი ურთიერთობა არ არსებობს.
+        /// </summary>
+        internal static string Relationship_DoesNotExist {
+            get {
+                return ResourceManager.GetString("Relationship_DoesNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ეს ურთიერთობა უკვე არსებობს.
+        /// </summary>
+        internal static string Relationship_ExistsAlready {
+            get {
+                return ResourceManager.GetString("Relationship_ExistsAlready", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to პირადი ნომერი უნდა შედგებოდეს 11 ციფრისგან.
         /// </summary>
         internal static string SocialNumber_LengthMustBeEleven {
             get {
                 return ResourceManager.GetString("SocialNumber_LengthMustBeEleven", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to მომხმარებელი ამ სოციალური ნომრით უკვე არსებობს.
+        /// </summary>
+        internal static string User_AlreadyExistsWithSocialNumber {
+            get {
+                return ResourceManager.GetString("User_AlreadyExistsWithSocialNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to მომხმარებელი არ არსებობს.
+        /// </summary>
+        internal static string User_DoesNotExist {
+            get {
+                return ResourceManager.GetString("User_DoesNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to მომხმარებელი უნდა იყოს მინიმუმ 18 წლის.
+        /// </summary>
+        internal static string User_MustBeAtLeast18YearsOld {
+            get {
+                return ResourceManager.GetString("User_MustBeAtLeast18YearsOld", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to მომხმარებელი ამ ტელეფონის ნომრით უკვე არსებობს.
+        /// </summary>
+        internal static string User_WithPhoneNumberExists {
+            get {
+                return ResourceManager.GetString("User_WithPhoneNumberExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ურთიერთობაში მითითებული ერთ-ერთი მომხმარებელი არასწორია.
+        /// </summary>
+        internal static string Users_InRelationshipDoNotExist {
+            get {
+                return ResourceManager.GetString("Users_InRelationshipDoNotExist", resourceCulture);
             }
         }
         

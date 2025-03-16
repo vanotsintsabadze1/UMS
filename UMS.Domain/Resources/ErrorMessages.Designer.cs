@@ -60,6 +60,15 @@ namespace UMS.API.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to File not found.
+        /// </summary>
+        internal static string File_DoesNotExist {
+            get {
+                return ResourceManager.GetString("File_DoesNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Uploaded file is not an image.
         /// </summary>
         internal static string Image_MustBeImage {
@@ -105,11 +114,83 @@ namespace UMS.API.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The provided city is invalid.
+        /// </summary>
+        internal static string ProvidedCity_DoesNotExist {
+            get {
+                return ResourceManager.GetString("ProvidedCity_DoesNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No such relationship exists.
+        /// </summary>
+        internal static string Relationship_DoesNotExist {
+            get {
+                return ResourceManager.GetString("Relationship_DoesNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This relationship already exists.
+        /// </summary>
+        internal static string Relationship_ExistsAlready {
+            get {
+                return ResourceManager.GetString("Relationship_ExistsAlready", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Length of the social number has to be 11.
         /// </summary>
         internal static string SocialNumber_LengthMustBeEleven {
             get {
                 return ResourceManager.GetString("SocialNumber_LengthMustBeEleven", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A user with this social number already exists.
+        /// </summary>
+        internal static string User_AlreadyExistsWithSocialNumber {
+            get {
+                return ResourceManager.GetString("User_AlreadyExistsWithSocialNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User does not exist.
+        /// </summary>
+        internal static string User_DoesNotExist {
+            get {
+                return ResourceManager.GetString("User_DoesNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User must be at least 18 years old.
+        /// </summary>
+        internal static string User_MustBeAtLeast18YearsOld {
+            get {
+                return ResourceManager.GetString("User_MustBeAtLeast18YearsOld", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A user with this phone number already exists.
+        /// </summary>
+        internal static string User_WithPhoneNumberExists {
+            get {
+                return ResourceManager.GetString("User_WithPhoneNumberExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to One or more users in the relationship are invalid.
+        /// </summary>
+        internal static string Users_InRelationshipDoNotExist {
+            get {
+                return ResourceManager.GetString("Users_InRelationshipDoNotExist", resourceCulture);
             }
         }
         

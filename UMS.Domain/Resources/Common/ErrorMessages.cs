@@ -15,4 +15,13 @@ public static class ErrorMessageNames
     public static readonly string PhoneNumberCanNotBeEmpty = "PhoneNumber_CantBeEmpty";
     public static readonly string PhoneNumberCantBeDuplicate = "PhoneNumber_CantBeDuplicate";
     public static readonly string ImageMustBeImage = "Image_MustBeImage";
+    public static readonly string UserDoesNotExist = "User_DoesNotExist";
+    public static readonly string UserAlreadyExistsWithSocialNumber = "User_AlreadyExistsWithSocialNumber";
+    public static readonly string UserWithPhoneNumberExists = "User_WithPhoneNumberExists";
+    public static readonly string UserMustBeAtLeast18YearsOld = "User_MustBeAtLeast18YearsOld";
+    public static readonly string ProvidedCityDoesNotExist = "ProvidedCity_DoesNotExist";
+    public static readonly string UsersInRelationshipDoNotExist = "Users_InRelationshipDoNotExist";
+    public static readonly string RelationshipExistsAlready = "Relationship_ExistsAlready";
+    public static readonly string RelationshipDoesNotExist = "Relationship_DoesNotExist";
+    public static readonly string FileDoesNotExist = "File_DoesNotExist";
 }

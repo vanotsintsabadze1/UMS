@@ -1,9 +1,11 @@
 ﻿using Mapster;
 using MediatR;
+using Microsoft.Extensions.Localization;
 using UMS.Application.CQRS.Commands.User;
 using UMS.Application.Exceptions;
 using UMS.Application.Interfaces.Repositories;
 using UMS.Application.Models.User;
+using UMS.Domain.Resources;
 using UMS.Domain.ValueObjects;
 
 namespace UMS.Application.CQRS.Handlers;
@@ -11,11 +13,16 @@ namespace UMS.Application.CQRS.Handlers;
 public class CreateUserRelationshipCommandHandler : IRequestHandler<CreateUserRelationshipCommand, UserRelationshipDto>
 {
     private readonly IRelationshipRepository _relationshipRepository;
+    private readonly IStringLocalizer<ErrorMessages> _localizer;
     private readonly IUserRepository _userRepository;
     
-    public CreateUserRelationshipCommandHandler(IRelationshipRepository relationshipRepository, IUserRepository userRepository)
+    public CreateUserRelationshipCommandHandler(
+        IRelationshipRepository relationshipRepository,
+        IUserRepository userRepository,
+        IStringLocalizer<ErrorMessages> localizer)
     {
         _relationshipRepository = relationshipRepository;
+        _localizer = localizer;
         _userRepository = userRepository;
     }
 
@@ -25,7 +32,7 @@ public class CreateUserRelationshipCommandHandler : IRequestHandler<CreateUserRe
         var relatedUser = await _userRepository.GetAsync(u => u.Id == request.RelatedUserId, cancellationToken);
 
         if (user is null || relatedUser is null)
-            throw new NotFoundException("User or related user does not exist");
+            throw new NotFoundException(_localizer[ErrorMessageNames.UsersInRelationshipDoNotExist]);
 
         var existingRelationship = await _relationshipRepository.GetAsync(r =>
                 (r.UserId == request.UserId && r.RelatedUserId == request.RelatedUserId)
@@ -33,7 +40,7 @@ public class CreateUserRelationshipCommandHandler : IRequestHandler<CreateUserRe
             cancellationToken);
 
         if (existingRelationship is not null)
-            throw new ConflictException("Relationship between these users exist already");
+            throw new ConflictException(_localizer[ErrorMessageNames.RelationshipExistsAlready]);
 
         var relationship = new UserRelationship()
         {
